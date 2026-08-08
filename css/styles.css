@@ -963,6 +963,53 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
   .burger { display: block; }
 }
 
+/* ---------- 404 ---------- */
+.page-404 { background: var(--pink); }
+.err-stage {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  position: relative;
+  padding: 2rem 1.25rem;
+  background-color: var(--pink);
+}
+.err-card {
+  max-width: 620px;
+  text-align: center;
+  background: var(--cream);
+  border: var(--ol);
+  border-radius: 26px;
+  box-shadow: var(--shadow);
+  padding: clamp(2rem, 5vw, 3.5rem);
+  transform: rotate(-.8deg);
+}
+.err-cake {
+  width: 148px;
+  height: 148px;
+  margin: -110px auto 1.2rem;
+  border-radius: 50%;
+  border: 5px solid var(--ink);
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  animation: sway 5s ease-in-out infinite alternate;
+}
+.err-cake img { width: 84%; height: 84%; object-fit: contain; }
+.err-code {
+  font-family: var(--agbalumo);
+  font-size: 1.4rem;
+  color: var(--cherry);
+  letter-spacing: .3em;
+  margin-bottom: .2rem;
+}
+.err-card h1 { font-size: clamp(1.9rem, 5vw, 3rem); }
+.err-sub { font-weight: 500; margin-block: 1rem 1.6rem; }
+.err-ctas { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+.err-spark-1 { top: 12%; left: 8%; position: absolute; }
+.err-spark-2 { bottom: 10%; right: 7%; position: absolute; }
+
 /* ---------- Přístupnost ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
