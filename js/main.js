@@ -80,9 +80,54 @@
     io.observe(hero);
   }
 
+  /* GSAP motion pass — reveals přes ScrollTrigger.batch + hero parallax */
+  function initMotion() {
+    gsap.registerPlugin(ScrollTrigger);
+
+    ScrollTrigger.batch('.rev', {
+      start: 'top 88%',
+      once: true,
+      onEnter: function (batch) {
+        batch.forEach(function (el) { el.classList.add('in'); });
+      }
+    });
+
+    /* hero parallax: text a scéna se rozjíždějí různou rychlostí */
+    gsap.to('.hero-copy', {
+      y: 60,
+      opacity: .35,
+      ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+    });
+    gsap.to('.hero-stage', {
+      y: -70,
+      ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+    });
+
+    /* polaroidy se při scrollu lehce rozestoupí */
+    gsap.to('.pol-1', {
+      y: -24,
+      ease: 'none',
+      scrollTrigger: { trigger: '.story', start: 'top bottom', end: 'bottom top', scrub: true }
+    });
+    gsap.to('.pol-2', {
+      y: 24,
+      ease: 'none',
+      scrollTrigger: { trigger: '.story', start: 'top bottom', end: 'bottom top', scrub: true }
+    });
+  }
+
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   initMenu();
   initHeaderShadow();
-  initReveal();
   initToday();
   initFab();
+
+  if (!reducedMotion && window.gsap && window.ScrollTrigger) {
+    initMotion();
+  } else {
+    initReveal();
+  }
 })();

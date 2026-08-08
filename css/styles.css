@@ -551,6 +551,8 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
   position: relative;
   min-height: 460px;
 }
+.pol-wrap { margin: 0; }
+.pol-wrap .polaroid { margin: 0; }
 .pol-1 {
   position: absolute;
   top: 0;

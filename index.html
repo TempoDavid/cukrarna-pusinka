@@ -85,14 +85,18 @@
     <section id="tradice" class="story" aria-label="Tradiční přístup">
       <div class="container story-grid">
         <div class="story-stage" aria-hidden="false">
-          <figure class="polaroid pol-1 rev" style="--r:-4deg; --d:0s">
-            <img src="images/story-shop.webp" alt="Budova cukrárny Pusinka v Brně-Králově Poli" loading="lazy" width="1300" height="1107">
-            <figcaption>Naše cukrárna v Králově Poli</figcaption>
-          </figure>
-          <figure class="polaroid pol-2 rev" style="--r:3deg; --d:.12s">
-            <img src="images/story-cake.webp" alt="Jahodový dort s čerstvým ovocem na stojanu" loading="lazy" width="867" height="1300">
-            <figcaption>Poctivé řemeslo od roku 1992</figcaption>
-          </figure>
+          <div class="pol-wrap pol-1">
+            <figure class="polaroid rev" style="--r:-4deg; --d:0s">
+              <img src="images/story-shop.webp" alt="Budova cukrárny Pusinka v Brně-Králově Poli" loading="lazy" width="1300" height="1107">
+              <figcaption>Naše cukrárna v Králově Poli</figcaption>
+            </figure>
+          </div>
+          <div class="pol-wrap pol-2">
+            <figure class="polaroid rev" style="--r:3deg; --d:.12s">
+              <img src="images/story-cake.webp" alt="Jahodový dort s čerstvým ovocem na stojanu" loading="lazy" width="867" height="1300">
+              <figcaption>Poctivé řemeslo od roku 1992</figcaption>
+            </figure>
+          </div>
         </div>
         <div class="story-copy">
           <p class="rev" style="--d:0s"><span class="eyebrow">Tradiční přístup</span></p>
@@ -297,6 +301,8 @@
 
   <a class="fab btn btn--cherry" href="/404" id="fab">🍰 Dort ještě dnes</a>
 
+  <script src="vendor/gsap.min.js" defer></script>
+  <script src="vendor/ScrollTrigger.min.js" defer></script>
   <script src="js/main.js" defer></script>
 </body>
 </html>
