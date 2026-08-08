@@ -705,6 +705,101 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
   .cards { row-gap: 4.6rem; }
 }
 
+/* ---------- Dorty na počkání ---------- */
+.express { padding-block: clamp(3.5rem, 7vw, 5.5rem); }
+.express-card {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 2rem;
+  align-items: center;
+  background: var(--pink-light);
+  border: var(--ol);
+  border-radius: 26px;
+  box-shadow: var(--shadow);
+  padding: clamp(1.8rem, 4vw, 3.2rem);
+}
+.express-copy h2 { margin-bottom: .4em; }
+.steps { margin-top: .2rem; }
+.couriers {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .55rem;
+  font-weight: 700;
+  font-size: .85rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin: 1.1rem 0 1.4rem;
+}
+.express-photo { position: relative; }
+.express-photo img {
+  border: var(--ol);
+  border-radius: 18px;
+  box-shadow: var(--shadow-sm);
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.express-badge {
+  position: absolute;
+  top: -28px;
+  right: -14px;
+  transform: rotate(8deg);
+  animation: bob 5s ease-in-out infinite;
+}
+
+/* ---------- Svatby + Firmy (pbannery) ---------- */
+.services { padding-block: 0 clamp(4rem, 8vw, 6rem); }
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.8rem;
+}
+.pbanner {
+  position: relative;
+  overflow: hidden;
+  border: var(--ol);
+  border-radius: 26px;
+  box-shadow: var(--shadow);
+  padding: clamp(1.6rem, 3vw, 2.4rem);
+  min-height: 320px;
+  display: flex;
+}
+.pbanner--pistachio { background: var(--pistachio); }
+.pbanner--pink { background: var(--pink); }
+.pbanner-copy { position: relative; z-index: 2; max-width: 62%; }
+.pbanner-copy h2 { font-size: clamp(1.7rem, 2.6vw, 2.2rem); }
+.pbanner-copy p { font-weight: 500; font-size: .95rem; }
+.pbanner-copy .btn { margin-top: .5rem; }
+.pbanner-disc {
+  position: absolute;
+  right: -19rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30rem;
+  height: 30rem;
+  border-radius: 50%;
+  border: var(--ol);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.pbanner-disc img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: spin 120s linear infinite;
+}
+
+@media (max-width: 900px) {
+  .express-card { grid-template-columns: 1fr; }
+  .express-badge { width: 96px; height: 96px; font-size: .64rem; top: -20px; right: 4px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .pbanner { min-height: 0; }
+  .pbanner-copy { max-width: 100%; }
+  .pbanner-disc { position: static; transform: none; width: 100%; height: 180px; border-radius: 18px; margin-top: 1.2rem; }
+  .pbanner { flex-direction: column; }
+}
+
 /* ---------- Keyframes ---------- */
 @keyframes tick { to { transform: translateX(-50%); } }
 @keyframes sway {
