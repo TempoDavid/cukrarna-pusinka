@@ -132,6 +132,17 @@ body::after {
   letter-spacing: .22em;
 }
 
+/* zdobící squiggle podtržení */
+.squiggle {
+  display: block;
+  width: 180px;
+  height: 22px;
+  margin-top: -.4rem;
+  margin-bottom: 1rem;
+}
+.squiggle--center { margin-inline: auto; }
+.squiggle svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
 /* ---------- Reveal kontrakt (.rev + .in) ---------- */
 .rev {
   opacity: 0;
@@ -453,11 +464,18 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
   white-space: nowrap;
 }
 .ticker .star { color: var(--butter); }
+.ticker .ico {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  vertical-align: -4px;
+  line-height: 0;
+}
+.ticker .ico svg { width: 17px; height: 17px; display: block; }
 
 /* ---------- Hero ---------- */
 .hero {
   background: var(--pink);
-  border-bottom: var(--ol);
   overflow: hidden;
 }
 .hero-grid {
@@ -491,7 +509,17 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
   place-items: center;
   min-height: 380px;
 }
+.doily {
+  position: absolute;
+  width: min(475px, 92vw);
+  aspect-ratio: 1;
+  z-index: 0;
+  transform: rotate(-4deg);
+}
+.doily svg { width: 100%; height: 100%; display: block; filter: drop-shadow(8px 9px 0 rgba(43, 21, 22, .22)); }
 .hero-cake {
+  position: relative;
+  z-index: 1;
   width: min(400px, 78vw);
   aspect-ratio: 1;
   border-radius: 50%;
@@ -511,7 +539,7 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
   object-fit: contain;
 }
 
-.sticker { position: absolute; }
+.sticker { position: absolute; z-index: 3; }
 .stick-butter {
   top: 2%;
   right: 4%;
@@ -717,6 +745,7 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
 /* ---------- Dorty na počkání ---------- */
 .express { padding-block: clamp(3.5rem, 7vw, 5.5rem); }
 .express-card {
+  position: relative;
   display: grid;
   grid-template-columns: 1.1fr .9fr;
   gap: 2rem;
@@ -740,7 +769,13 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
   letter-spacing: .08em;
   margin: 1.1rem 0 1.4rem;
 }
-.express-photo { position: relative; }
+.express-photo {
+  position: relative;
+  margin-top: clamp(-4.5rem, -6vw, -2rem);
+  transform: rotate(-2deg);
+  transition: transform .35s var(--spring);
+}
+.express-card:hover .express-photo { transform: rotate(-.6deg); }
 .express-photo img {
   border: var(--ol);
   border-radius: 18px;
@@ -766,51 +801,113 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
 }
 .pbanner {
   position: relative;
-  overflow: hidden;
   border: var(--ol);
   border-radius: 26px;
   box-shadow: var(--shadow);
   padding: clamp(1.6rem, 3vw, 2.4rem);
-  min-height: 320px;
+  min-height: 340px;
   display: flex;
 }
 .pbanner--pistachio { background: var(--pistachio); }
 .pbanner--pink { background: var(--pink); }
-.pbanner-copy { position: relative; z-index: 2; max-width: 62%; }
+.pbanner-copy { position: relative; z-index: 2; max-width: 55%; }
 .pbanner-copy h2 { font-size: clamp(1.7rem, 2.6vw, 2.2rem); }
 .pbanner-copy p { font-weight: 500; font-size: .95rem; }
 .pbanner-copy .btn { margin-top: .5rem; }
-.pbanner-disc {
+/* fotka jako nalepená momentka s páskou, vykukuje přes okraj karty */
+.pbanner-photo {
   position: absolute;
-  right: -19rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 30rem;
-  height: 30rem;
-  border-radius: 50%;
+  margin: 0;
+  right: -14px;
+  top: -26px;
+  width: min(46%, 250px);
+  background: #fff;
   border: var(--ol);
-  overflow: hidden;
-  box-shadow: var(--shadow);
+  padding: .55rem .55rem 1rem;
+  box-shadow: var(--shadow-sm);
+  transform: rotate(4deg);
+  transition: transform .35s var(--spring);
 }
-.pbanner-disc img {
+.pbanner-photo--alt {
+  top: auto;
+  bottom: -30px;
+  right: -10px;
+  width: min(42%, 225px);
+  transform: rotate(-3.5deg);
+}
+.pbanner:hover .pbanner-photo { transform: rotate(1.5deg) scale(1.03); }
+.pbanner:hover .pbanner-photo--alt { transform: rotate(-1.2deg) scale(1.03); }
+.pbanner-photo::before {
+  content: '';
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  width: 92px;
+  height: 26px;
+  transform: translateX(-50%) rotate(-2deg);
+  background: rgba(247, 190, 39, .85);
+  border: 2px solid rgba(43, 21, 22, .35);
+}
+.pbanner-photo img {
+  border: 2px solid var(--ink);
   width: 100%;
-  height: 100%;
+  aspect-ratio: 5 / 4;
   object-fit: cover;
-  animation: spin 120s linear infinite;
 }
+.sticker-300 {
+  position: absolute;
+  top: -30px;
+  right: 24px;
+  width: 106px;
+  height: 106px;
+  font-size: .66rem;
+  transform: rotate(7deg);
+  --r: 7deg;
+  animation: bob 5.8s ease-in-out infinite;
+  z-index: 3;
+}
+.pbanner-deco { position: absolute; }
+.deco-bunting {
+  top: -20px;
+  left: 4%;
+  width: 46%;
+  z-index: 3;
+  pointer-events: none;
+}
+.pbanner--pistachio .pbanner-copy { padding-top: 2.6rem; }
+.deco-bunting { aspect-ratio: 240 / 70; }
+.deco-bunting svg { width: 100%; height: 100%; display: block; }
+.deco-heart {
+  bottom: 14px;
+  right: 40%;
+  width: 40px;
+  pointer-events: none;
+  transform: rotate(-9deg);
+}
+.deco-heart { aspect-ratio: 1; }
+.deco-heart svg { width: 100%; height: 100%; display: block; }
 
 @media (max-width: 900px) {
   .express-card { grid-template-columns: 1fr; }
+  .express-photo { margin-top: .5rem; transform: rotate(-1deg); }
   .express-badge { width: 96px; height: 96px; font-size: .64rem; top: -20px; right: 4px; }
-  .services-grid { grid-template-columns: 1fr; }
-  .pbanner { min-height: 0; }
+  .services-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .pbanner { min-height: 0; flex-direction: column; }
   .pbanner-copy { max-width: 100%; }
-  .pbanner-disc { position: static; transform: none; width: 100%; height: 180px; border-radius: 18px; margin-top: 1.2rem; }
-  .pbanner { flex-direction: column; }
+  .pbanner-photo {
+    position: static;
+    width: 82%;
+    margin: 1.2rem auto 0;
+    transform: rotate(2deg);
+  }
+  .pbanner-photo--alt { transform: rotate(-2deg); }
+  .sticker-300 { top: auto; bottom: -26px; right: 10px; }
+  .deco-heart { display: none; }
 }
 
 /* ---------- Recenze ---------- */
 .reviews {
+  position: relative;
   background: var(--pistachio);
   border-top: var(--ol);
   padding-block: clamp(3.5rem, 7vw, 5.5rem);
@@ -945,6 +1042,59 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
   .fab { display: inline-flex; }
 }
 
+/* ---------- SVG dekorace ---------- */
+.deco {
+  position: absolute;
+  pointer-events: none;
+  line-height: 0;
+  z-index: 2;
+  aspect-ratio: 1;
+}
+.deco svg { width: 100%; height: 100%; display: block; }
+.hero-sprinkles-1, .best-sprinkles, .express-sprinkles { aspect-ratio: 100 / 68; }
+.best-cupcake { aspect-ratio: 100 / 120; }
+
+/* hero */
+.hero-sprinkles-1 { width: 92px; top: -2%; left: -4%; transform: rotate(-10deg); opacity: .9; }
+.hero-cherry { width: 64px; bottom: 16%; right: -4%; transform: rotate(10deg); }
+.hero-pusinka { width: 58px; top: 24%; left: -8%; transform: rotate(-7deg); }
+
+/* story */
+.story { position: relative; }
+.story-gingerbread { width: 86px; right: 4%; bottom: 8%; transform: rotate(9deg); }
+.story-coffee { width: 74px; top: 7%; right: 6%; transform: rotate(-6deg); opacity: .95; }
+
+/* bestsellery */
+.bestsellers { position: relative; }
+.best-cupcake { width: 96px; top: 4.5rem; left: 6%; transform: rotate(-8deg); }
+.best-sprinkles { width: 110px; top: 7rem; right: 5%; transform: rotate(14deg); opacity: .9; }
+.best-pusinka { width: 64px; bottom: 3.5rem; left: 3.5%; transform: rotate(6deg); }
+
+/* express */
+.express-macaron { width: 78px; left: -26px; bottom: -24px; transform: rotate(-12deg); z-index: 3; }
+.express-sprinkles { width: 90px; right: -18px; top: -30px; transform: rotate(24deg); }
+
+/* recenze */
+.rev-pusinka { width: 84px; top: 3.2rem; left: 7%; transform: rotate(-8deg); }
+.rev-macaron { width: 72px; top: 5.5rem; right: 7%; transform: rotate(10deg); }
+
+/* kontakt */
+.contact-info { position: relative; }
+.contact-coffee { width: 96px; top: -3.4rem; right: 2%; transform: rotate(7deg); }
+
+/* footer */
+.foot-ginger { display: inline-block; width: 30px; height: 30px; vertical-align: -8px; margin-right: .35rem; }
+.foot-ginger svg { width: 100%; height: 100%; }
+
+@media (max-width: 900px) {
+  .hero-pusinka, .story-coffee, .best-pusinka, .rev-macaron, .express-sprinkles { display: none; }
+  .hero-sprinkles-1 { width: 64px; }
+  .best-cupcake { width: 64px; top: 2.2rem; left: 3%; }
+  .best-sprinkles { width: 76px; top: auto; bottom: 2rem; }
+  .contact-coffee { width: 70px; top: -4.5rem; right: 0; }
+  .stand-deco { bottom: -4%; }
+}
+
 /* ---------- Keyframes ---------- */
 @keyframes tick { to { transform: translateX(-50%); } }
 @keyframes sway {
@@ -1005,6 +1155,12 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
   animation: sway 5s ease-in-out infinite alternate;
 }
 .err-cake img { width: 84%; height: 84%; object-fit: contain; }
+.err-stand {
+  width: 210px;
+  margin: -26px auto .8rem;
+  line-height: 0;
+}
+.err-stand svg { width: 100%; height: auto; }
 .err-code {
   font-family: var(--agbalumo);
   font-size: 1.4rem;

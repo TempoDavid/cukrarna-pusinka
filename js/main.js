@@ -105,6 +105,42 @@
       scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
     });
 
+    /* zdobící linky se samy nakreslí (stroke draw-in) */
+    document.querySelectorAll('.sq-path').forEach(function (path) {
+      var len = path.getTotalLength();
+      path.style.strokeDasharray = len;
+      path.style.strokeDashoffset = len;
+      gsap.to(path, {
+        strokeDashoffset: 0,
+        duration: 1.1,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: path, start: 'top 88%', once: true }
+      });
+    });
+
+    /* plovoucí dekorace — každá jinou rychlostí, ať to žije */
+    document.querySelectorAll('.float-deco').forEach(function (el, i) {
+      gsap.to(el, {
+        y: 8 + (i % 3) * 4,
+        rotation: (i % 2 ? '+=4' : '-=4'),
+        duration: 3.6 + (i % 4) * .9,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1
+      });
+    });
+
+    /* dekorace v sekcích lehce parallaxují proti scrollu */
+    ['.story-gingerbread', '.best-cupcake', '.best-sprinkles', '.rev-pusinka'].forEach(function (sel) {
+      var el = document.querySelector(sel);
+      if (!el) return;
+      gsap.to(el, {
+        y: -34,
+        ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+      });
+    });
+
     /* polaroidy se při scrollu lehce rozestoupí */
     gsap.to('.pol-1', {
       y: -24,
