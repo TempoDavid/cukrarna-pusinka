@@ -446,8 +446,104 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
 }
 .ticker .star { color: var(--butter); }
 
+/* ---------- Hero ---------- */
+.hero {
+  background: var(--pink);
+  border-bottom: var(--ol);
+  overflow: hidden;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  align-items: center;
+  gap: 2.5rem;
+  padding-block: clamp(3.5rem, 7vw, 6rem);
+}
+.eyebrow-chip { font-size: .72rem; letter-spacing: .14em; }
+.hero h1 { margin-bottom: .35em; }
+.outline-word {
+  display: inline-block;
+  color: var(--cream);
+  -webkit-text-stroke: 2px var(--ink);
+  text-shadow: 4px 4px 0 var(--ink);
+  transform: rotate(-1.2deg);
+}
+.hero-sub {
+  max-width: 46ch;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 1.6em;
+}
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5em; }
+.trust-chip .stars { color: var(--cherry); letter-spacing: .1em; }
+
+.hero-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 380px;
+}
+.hero-cake {
+  width: min(400px, 78vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 7px solid var(--ink);
+  box-shadow: inset 0 0 0 6px var(--cream), 10px 12px 0 rgba(43, 21, 22, .28);
+  overflow: hidden;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  animation: sway 5.5s ease-in-out infinite alternate;
+  transition: transform .35s var(--spring);
+}
+.hero-cake:hover { transform: scale(1.04) rotate(2deg); }
+.hero-cake img {
+  width: 86%;
+  height: 86%;
+  object-fit: contain;
+}
+
+.sticker { position: absolute; }
+.stick-butter {
+  top: 2%;
+  right: 4%;
+  --r: 9deg;
+  transform: rotate(9deg);
+  animation: bob 5.4s ease-in-out infinite;
+}
+.stick-cherry {
+  bottom: 6%;
+  left: 2%;
+  --r: -7deg;
+  transform: rotate(-7deg);
+  background: var(--cherry);
+  color: var(--cream);
+  animation: bob 6.2s ease-in-out infinite reverse;
+}
+.spark {
+  position: absolute;
+  font-family: var(--agbalumo);
+  font-size: 2rem;
+  color: var(--cream);
+  text-shadow: 2px 2px 0 var(--ink);
+}
+.spark-1 { top: 8%; left: 4%; transform: rotate(-14deg); }
+.spark-2 { bottom: 14%; right: 2%; transform: rotate(10deg); font-size: 1.5rem; }
+.spark-3 { top: 42%; left: -3%; transform: rotate(6deg); font-size: 1.2rem; color: var(--butter); }
+
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-stage { min-height: 0; margin-top: .5rem; }
+  .spark { display: none; }
+  .stick-butter { width: 96px; height: 96px; font-size: .64rem; top: -4%; }
+}
+
 /* ---------- Keyframes ---------- */
 @keyframes tick { to { transform: translateX(-50%); } }
+@keyframes sway {
+  from { transform: rotate(-2deg); }
+  to { transform: rotate(2.5deg); }
+}
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes bob {
   0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
