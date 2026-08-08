@@ -78,6 +78,12 @@ h1, h2, h3 {
 h1 { font-size: clamp(2.7rem, 6.4vw, 4.9rem); }
 h2 { font-size: clamp(2rem, 4.4vw, 3.2rem); }
 h3 { font-size: clamp(1.25rem, 2.2vw, 1.6rem); }
+h1, h2, h3 { text-wrap: balance; }
+section[id] { scroll-margin-top: calc(var(--header-h) + 46px); }
+a, button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
 p { margin: 0 0 1em; }
 ::selection { background: var(--butter); color: var(--ink); }
 :focus-visible { outline: 3px dashed var(--cherry); outline-offset: 3px; border-radius: 4px; }
@@ -390,6 +396,7 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
   z-index: 899;
   background: var(--pink);
   padding-top: var(--header-h);
+  overscroll-behavior: contain;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -865,6 +872,7 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
   font-size: .95rem;
 }
 .hours li span { font-weight: 700; text-transform: uppercase; letter-spacing: .07em; font-size: .8rem; }
+.hours li b { font-variant-numeric: tabular-nums; }
 .hours li.today { color: var(--butter); }
 .hours li.today b::after {
   content: 'dnes';
@@ -923,7 +931,7 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
 .fab {
   position: fixed;
   right: 1rem;
-  bottom: 1rem;
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
   z-index: 950;
   display: none;
   transform: translateY(120px);
@@ -1011,6 +1019,9 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
 .err-spark-2 { bottom: 10%; right: 7%; position: absolute; }
 
 /* ---------- Přístupnost ---------- */
+@media (hover: none) {
+  .egg { transform: rotate(-3deg) scale(1); }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .rev { opacity: 1; transform: none; transition: none; }
