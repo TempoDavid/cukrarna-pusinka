@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<style>
+  @font-face {
+    font-family: 'Agbalumo';
+    src: url('../fonts/agbalumo-regular.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Raleway';
+    src: url('../fonts/raleway-700.woff2') format('woff2');
+    font-weight: 700;
+  }
+  html, body { margin: 0; }
+  #og {
+    position: relative;
+    width: 1200px;
+    height: 630px;
+    box-sizing: border-box;
+    background: #EF7E88;
+    background-image: radial-gradient(rgba(43,21,22,.08) 2px, transparent 2px);
+    background-size: 30px 30px;
+    border: 14px solid #2B1516;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0 70px;
+    font-family: 'Raleway', sans-serif;
+  }
+  .copy { position: relative; z-index: 2; width: 640px; }
+  .logo-card {
+    display: inline-block;
+    background: #FDF2E7;
+    border: 5px solid #2B1516;
+    border-radius: 22px;
+    box-shadow: 10px 10px 0 #2B1516;
+    padding: 18px 30px;
+    transform: rotate(-2deg);
+    margin-bottom: 38px;
+  }
+  .logo-card img { height: 110px; display: block; }
+  h1 {
+    font-family: 'Agbalumo', cursive;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 74px;
+    line-height: 1.02;
+    color: #2B1516;
+    margin: 0 0 22px;
+  }
+  h1 b {
+    font-weight: 400;
+    color: #FDF2E7;
+    -webkit-text-stroke: 3px #2B1516;
+    text-shadow: 6px 6px 0 #2B1516;
+    display: inline-block;
+    transform: rotate(-1.2deg);
+  }
+  .sub {
+    display: inline-block;
+    background: #2B1516;
+    color: #FDF2E7;
+    font-weight: 700;
+    font-size: 25px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 12px 26px;
+    border-radius: 999px;
+    transform: rotate(-1deg);
+  }
+  .cake {
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    background: #fff;
+    border: 12px solid #2B1516;
+    box-shadow: inset 0 0 0 10px #FDF2E7, 16px 18px 0 rgba(43,21,22,.3);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .cake img { width: 84%; }
+  .spark { position: absolute; font-family: 'Agbalumo'; color: #FDF2E7; text-shadow: 4px 4px 0 #2B1516; }
+  .s1 { font-size: 60px; left: 640px; top: 60px; transform: rotate(-12deg); }
+  .s2 { font-size: 44px; left: 600px; bottom: 70px; transform: rotate(9deg); color: #F7C948; }
+</style>
+</head>
+<body>
+<div id="og">
+  <div class="copy">
+    <div class="logo-card"><img src="../images/logo-pusinka.svg" alt=""></div>
+    <h1>Poctivá brněnská<br><b>cukrařina</b></h1>
+    <span class="sub">Od roku 1992 · Brno-Královo Pole</span>
+  </div>
+  <div class="cake"><img src="../images/cake-jahudka.webp" alt=""></div>
+  <span class="spark s1">✦</span>
+  <span class="spark s2">✳</span>
+</div>
+</body>
+</html>
