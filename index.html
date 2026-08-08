@@ -229,44 +229,73 @@
         </article>
       </div>
     </section>
-    <section id="recenze" aria-label="Recenze"></section>
-    <section id="kontakt" aria-label="Kontakt"></section>
-
-    <!-- KITCHEN SINK (dočasné — smazat v T7) -->
-    <section class="container" style="padding: 3rem 0; display: grid; gap: 2rem;" id="kitchen">
-      <h2>Kitchen sink</h2>
-      <p><span class="eyebrow">Eyebrow label</span></p>
-      <p>
-        <a class="btn btn--cherry" href="/404">Vybrat dort <span class="arr">→</span></a>
-        <a class="btn btn--cream" href="/404">Dort ještě dnes</a>
-        <a class="btn btn--butter" href="/404">Butter</a>
-      </p>
-      <p>
-        <span class="chip">★ 4,2 · 321 recenzí</span>
-        <span class="chip chip--pink">100% poctivé suroviny</span>
-        <span class="chip chip--butter">Bez mouky</span>
-      </p>
-      <div style="display:flex; gap:2rem; align-items:center; flex-wrap:wrap;">
-        <span class="badge-circle" style="--r:9deg; transform:rotate(9deg);">Z pravého másla!</span>
-        <span class="plate">od 570 Kč</span>
-        <figure class="polaroid" style="max-width:260px; margin:0;">
-          <img src="images/story-shop.webp" alt="Naše cukrárna v Brně-Králově Poli">
-          <figcaption>Naše cukrárna</figcaption>
-        </figure>
-        <blockquote class="bubble" style="max-width:300px; --r:-1.5deg;">
-          <p style="margin:0;">Tady se beztak učil i Willy Wonka ;o)</p>
-        </blockquote>
+    <section id="recenze" class="reviews" aria-label="Recenze">
+      <div class="container">
+        <div class="sec-head rev">
+          <p><span class="eyebrow">Recenze</span></p>
+          <h2>Říkají <span class="outline-word outline-cream">o nás</span></h2>
+          <p class="rating-row"><span class="badge-circle rating-badge">Google<br>4,2★<br>321 recenzí</span></p>
+        </div>
+        <div class="bubbles">
+          <blockquote class="bubble rev" style="--r:-1.4deg; --d:0s">
+            <p class="stars-row" aria-label="5 hvězdiček">★★★★★</p>
+            <p>„Jedním slovem nádhera, krásné a velmi chutné zákusky, vytvořili mi dort na počkání, který byl snězen rekordní rychlostí, milá a ochotná obsluha. Určitě doporučuji"</p>
+            <footer>— Erika Hačková</footer>
+          </blockquote>
+          <blockquote class="bubble rev" style="--r:1.1deg; --d:.08s">
+            <p class="stars-row" aria-label="5 hvězdiček">★★★★★</p>
+            <p>„Wow, náhodně objeveno a mazec, tady se beztak učil i Willy Wonka ;o) poctivé, výtečné a nejspíš něco navíc, asi nějaké tajemství, děkuji (o;"</p>
+            <footer>— Ondřej Bárta</footer>
+          </blockquote>
+          <blockquote class="bubble rev" style="--r:-.8deg; --d:.16s">
+            <p class="stars-row" aria-label="5 hvězdiček">★★★★★</p>
+            <p>„Dnes jsme měli narozeninovou oslavu s dvěma prostě vynikajícími dorty z Pusinky. Všem moc chutnaly a nezbyl ani kousíček. Moc doporučuji a děkuji."</p>
+            <footer>— Lenka Straková</footer>
+          </blockquote>
+        </div>
       </div>
-      <div class="divider" style="background: var(--cream); margin-bottom:0;" aria-hidden="true">
-        <svg viewBox="0 0 120 26" preserveAspectRatio="none"><path d="M0 26 A 15 22 0 0 1 30 26 A 15 22 0 0 1 60 26 A 15 22 0 0 1 90 26 A 15 22 0 0 1 120 26 Z" fill="#960016"/></svg>
-      </div>
-      <div style="background: var(--cherry); height: 60px; margin-top:-2rem;"></div>
     </section>
+
+    <section id="kontakt" class="contact" aria-label="Kontakt">
+      <div class="container contact-grid">
+        <div class="rev">
+          <p><span class="eyebrow on-butter">Kontakt</span></p>
+          <h2 class="on-dark">Zastavte se<br>v Králově Poli</h2>
+          <ul class="hours" id="hours">
+            <li data-day="1"><span>Pondělí</span><b>9.00–18.00</b></li>
+            <li data-day="2"><span>Úterý</span><b>9.00–18.00</b></li>
+            <li data-day="3"><span>Středa</span><b>9.00–18.00</b></li>
+            <li data-day="4"><span>Čtvrtek</span><b>9.00–18.00</b></li>
+            <li data-day="5"><span>Pátek</span><b>9.00–18.00</b></li>
+            <li data-day="6"><span>Sobota</span><b>9.00–18.00</b></li>
+            <li data-day="0"><span>Neděle</span><b>9.00–18.00</b></li>
+          </ul>
+        </div>
+        <div class="contact-info rev" style="--d:.1s">
+          <address>
+            <p class="c-row"><span class="c-ico" aria-hidden="true">📍</span> Palackého tř. 1379/97,<br>612 00 Brno-Královo Pole</p>
+            <p class="c-row c-parking"><span class="c-ico" aria-hidden="true">🅿</span> 2 parkovací místa, Riegrova 1 (vlevo)</p>
+            <p class="c-row"><a class="c-phone" href="tel:+420601587297">601 587 297</a></p>
+            <p class="c-row"><a class="c-mail" href="mailto:objednavky@cukrarna-pusinka.cz">objednavky@cukrarna-pusinka.cz</a></p>
+          </address>
+          <div class="map-frame">
+            <iframe src="https://maps.google.com/maps?q=Palack%C3%A9ho%20t%C5%99.%201379%2F97%2C%20Brno&z=15&output=embed" title="Mapa — Cukrárna Pusinka, Palackého tř. 1379/97, Brno" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <footer style="background: var(--ink); color: var(--cream); padding: 2rem 0;">
-    <div class="container"><p style="margin:0;">© 2026 Cukrárna Pusinka</p></div>
+  <footer class="site-footer">
+    <div class="container foot-grid">
+      <p class="foot-brand">Cukrářství a perníkářství <b>Pusinka</b></p>
+      <p>© 2026 Cukrárna Pusinka · PO–NE 9.00–18.00</p>
+      <p class="foot-demo">Demo redesign — není oficiální web</p>
+    </div>
   </footer>
+
+  <a class="fab btn btn--cherry" href="/404" id="fab">🍰 Dort ještě dnes</a>
 
   <script src="js/main.js" defer></script>
 </body>

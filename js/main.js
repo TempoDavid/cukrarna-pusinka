@@ -62,7 +62,27 @@
     els.forEach(function (el) { io.observe(el); });
   }
 
+  /* Zvýraznění dnešního dne v otevírací době */
+  function initToday() {
+    var today = new Date().getDay();
+    var row = document.querySelector('#hours li[data-day="' + today + '"]');
+    if (row) row.classList.add('today');
+  }
+
+  /* Mobilní FAB — ukáže se po odscrollování hera */
+  function initFab() {
+    var fab = document.getElementById('fab');
+    var hero = document.getElementById('uvod');
+    if (!fab || !hero || !('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      fab.classList.toggle('show', !entries[0].isIntersecting);
+    }, { threshold: 0 });
+    io.observe(hero);
+  }
+
   initMenu();
   initHeaderShadow();
   initReveal();
+  initToday();
+  initFab();
 })();

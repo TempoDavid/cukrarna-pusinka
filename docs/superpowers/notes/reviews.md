@@ -14,4 +14,4 @@ Párováno podle byte-offsetů jméno→text v HTML. Texty verbatim (jen zkráce
 Náhradník: **Lucie** — „Pěkná malá cukrárna. Příjemná paní. Velký výběr. Chutný a čerstvý dortík."
 
 Agregát pro badge: Google 4,2★ · 321 recenzí (z patičky webu).
-Pozn.: drobné překlepy v originálech („prosto", „nějské") ponechávám — jsou autentické; případně opravit až po odsouhlasení Davidem.
+Pozn.: drobné překlepy v originálech („prosto"→„prostě", „nějské"→„nějaké") jsem v demu tiše opravil, ať nepůsobí jako chyba webu. Nahlášeno Davidovi v souhrnu — kdyby chtěl 100% verbatim, vrátím.
