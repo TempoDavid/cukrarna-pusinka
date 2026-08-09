@@ -1,4 +1,4 @@
-/* Cukrárna Pusinka — vanilla JS: menu, header, reveals (GSAP pass v initMotion, T8) */
+/* Cukrárna Pusinka — vanilla JS: menu, header, animace */
 (function () {
   'use strict';
 
@@ -44,9 +44,9 @@
     update();
   }
 
-  /* Scroll reveal — IO fallback; GSAP pass (initMotion) ho v T8 přebije */
+  /* Fallback bez GSAP — prosté odkrytí */
   function initReveal() {
-    var els = document.querySelectorAll('.rev');
+    var els = document.querySelectorAll('.rev, .anim-head, .anim-img, .anim-card, .anim-chip');
     if (!('IntersectionObserver' in window)) {
       els.forEach(function (el) { el.classList.add('in'); });
       return;
@@ -58,7 +58,7 @@
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: .15, rootMargin: '0px 0px -40px' });
+    }, { threshold: .12, rootMargin: '0px 0px -40px' });
     els.forEach(function (el) { io.observe(el); });
   }
 
@@ -80,19 +80,179 @@
     io.observe(hero);
   }
 
-  /* GSAP motion pass — reveals přes ScrollTrigger.batch + hero parallax */
+  /* ---------------------------------------------------------------
+     Rozsekání nadpisu na slova — každé slovo do masky, ať může
+     vyjet zespodu. Zachovává <br> i vnořené <span> (outline-word).
+     --------------------------------------------------------------- */
+  function splitWords(el) {
+    if (el.dataset.split === '1') return el.querySelectorAll('.wi');
+    var frag = document.createDocumentFragment();
+
+    function walk(node, target) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (child) {
+        if (child.nodeType === 3) {
+          var parts = child.textContent.split(/(\s+)/);
+          parts.forEach(function (part) {
+            if (!part) return;
+            if (/^\s+$/.test(part)) {
+              target.appendChild(document.createTextNode(' '));
+              return;
+            }
+            var mask = document.createElement('span');
+            mask.className = 'w';
+            var inner = document.createElement('span');
+            inner.className = 'wi';
+            inner.textContent = part;
+            mask.appendChild(inner);
+            target.appendChild(mask);
+          });
+        } else if (child.nodeName === 'BR') {
+          target.appendChild(document.createElement('br'));
+        } else if (child.nodeType === 1) {
+          var clone = child.cloneNode(false);
+          target.appendChild(clone);
+          walk(child, clone);
+        }
+      });
+    }
+
+    walk(el, frag);
+    el.innerHTML = '';
+    el.appendChild(frag);
+    el.dataset.split = '1';
+    return el.querySelectorAll('.wi');
+  }
+
+  /* Počítadlo čísel (4,2 / 321 / 1992) */
+  function countUp(el, done) {
+    var raw = el.dataset.count;
+    var decimals = (raw.split('.')[1] || '').length;
+    var target = parseFloat(raw);
+    var obj = { v: 0 };
+    gsap.to(obj, {
+      v: target,
+      duration: 1.4,
+      ease: 'power2.out',
+      onUpdate: function () {
+        el.textContent = obj.v.toFixed(decimals).replace('.', ',');
+      },
+      onComplete: done
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     Hlavní animační pass
+     --------------------------------------------------------------- */
   function initMotion() {
     gsap.registerPlugin(ScrollTrigger);
+    gsap.defaults({ overwrite: 'auto' });
 
-    ScrollTrigger.batch('.rev', {
-      start: 'top 88%',
-      once: true,
-      onEnter: function (batch) {
-        batch.forEach(function (el) { el.classList.add('in'); });
-      }
+    /* --- 1. Nadpisy: slova vyjedou zespodu z masky --- */
+    document.querySelectorAll('.anim-head').forEach(function (head) {
+      var words = splitWords(head);
+      gsap.set(words, { yPercent: 118, rotate: 4 });
+      gsap.to(words, {
+        yPercent: 0,
+        rotate: 0,
+        duration: .85,
+        ease: 'power3.out',
+        stagger: .055,
+        scrollTrigger: { trigger: head, start: 'top 88%', once: true }
+      });
     });
 
-    /* hero parallax: text a scéna se rozjíždějí různou rychlostí */
+    /* --- 2. Odstavce a drobné prvky: jemný nájezd --- */
+    document.querySelectorAll('.anim-up').forEach(function (el) {
+      gsap.from(el, {
+        y: 26,
+        opacity: 0,
+        duration: .7,
+        ease: 'power2.out',
+        delay: parseFloat(el.dataset.delay || 0),
+        scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+      });
+    });
+
+    /* --- 3. Obrázky: odkryjí se stěrkou zdola nahoru --- */
+    document.querySelectorAll('.anim-img').forEach(function (el) {
+      gsap.fromTo(el,
+        { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.08 },
+        {
+          clipPath: 'inset(0% 0% 0% 0%)',
+          scale: 1,
+          duration: 1.05,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+        }
+      );
+    });
+
+    /* --- 4. Karty: naskáčou postupně s lehkým pootočením --- */
+    document.querySelectorAll('[data-stagger]').forEach(function (group) {
+      var items = group.querySelectorAll(group.dataset.stagger);
+      if (!items.length) return;
+      gsap.from(items, {
+        y: 46,
+        opacity: 0,
+        scale: .94,
+        duration: .7,
+        ease: 'back.out(1.4)',
+        stagger: { each: .07, from: 'start' },
+        scrollTrigger: { trigger: group, start: 'top 85%', once: true }
+      });
+    });
+
+    /* --- 5. Chipy / odrážky: popnou jeden po druhém --- */
+    document.querySelectorAll('[data-pop]').forEach(function (group) {
+      var items = group.querySelectorAll(group.dataset.pop);
+      if (!items.length) return;
+      gsap.from(items, {
+        scale: .3,
+        opacity: 0,
+        duration: .5,
+        ease: 'back.out(2.2)',
+        stagger: .06,
+        scrollTrigger: { trigger: group, start: 'top 90%', once: true }
+      });
+    });
+
+    /* --- 6. Čísla se načítají --- */
+    document.querySelectorAll('[data-count]').forEach(function (el) {
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 92%',
+        once: true,
+        onEnter: function () { countUp(el); }
+      });
+    });
+
+    /* --- 7. Pečeť 1992 přiletí a doskočí --- */
+    var seal = document.querySelector('.seal');
+    if (seal) {
+      gsap.from(seal, {
+        scale: 0,
+        rotate: -140,
+        duration: .8,
+        ease: 'back.out(1.7)',
+        scrollTrigger: { trigger: seal, start: 'top 92%', once: true }
+      });
+    }
+
+    /* --- 8. Hero intro po načtení --- */
+    var heroWords = document.querySelector('.hero h1');
+    var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    if (heroWords) {
+      var hw = splitWords(heroWords);
+      gsap.set(hw, { yPercent: 118, rotate: 5 });
+      tl.to(hw, { yPercent: 0, rotate: 0, duration: .95, stagger: .075 }, .15);
+    }
+    tl.from('.hero-sub', { y: 24, opacity: 0, duration: .7 }, '-=.5')
+      .from('.hero-ctas .btn', { y: 20, opacity: 0, scale: .92, duration: .55, stagger: .1, ease: 'back.out(1.6)' }, '-=.35')
+      .from('.trust-chip', { y: 16, opacity: 0, duration: .5 }, '-=.3')
+      .from('.hero-frame', { y: 60, rotate: -8, opacity: 0, duration: 1, ease: 'back.out(1.2)' }, .3)
+      .from('.hero-stage .deco', { scale: 0, opacity: 0, duration: .6, stagger: .12, ease: 'back.out(2)' }, '-=.4');
+
+    /* --- 9. Hero parallax --- */
     gsap.to('.hero-copy', {
       y: 60,
       opacity: .35,
@@ -105,19 +265,7 @@
       scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
     });
 
-    /* barevné sekce najíždějí zespodu jako vrstvy dortu */
-    ['#bestsellery', '#sluzby', '#recenze', '#kontakt'].forEach(function (sel) {
-      var sec = document.querySelector(sel);
-      if (!sec) return;
-      gsap.from(sec, {
-        yPercent: 6,
-        scale: .97,
-        ease: 'none',
-        scrollTrigger: { trigger: sec, start: 'top bottom', end: 'top 55%', scrub: .6 }
-      });
-    });
-
-    /* zdobící linky se samy nakreslí (stroke draw-in) */
+    /* --- 10. Zdobící linky se samy nakreslí --- */
     document.querySelectorAll('.sq-path').forEach(function (path) {
       var len = path.getTotalLength();
       path.style.strokeDasharray = len;
@@ -126,11 +274,11 @@
         strokeDashoffset: 0,
         duration: 1.1,
         ease: 'power2.out',
-        scrollTrigger: { trigger: path, start: 'top 88%', once: true }
+        scrollTrigger: { trigger: path, start: 'top 90%', once: true }
       });
     });
 
-    /* plovoucí dekorace — každá jinou rychlostí, ať to žije */
+    /* --- 11. Plovoucí dekorace --- */
     document.querySelectorAll('.float-deco').forEach(function (el, i) {
       gsap.to(el, {
         y: 8 + (i % 3) * 4,
@@ -142,7 +290,7 @@
       });
     });
 
-    /* dekorace v sekcích lehce parallaxují proti scrollu */
+    /* --- 12. Parallax dekorací a fotek v příběhu --- */
     ['.story-gingerbread', '.best-cupcake', '.best-sprinkles', '.rev-pusinka'].forEach(function (sel) {
       var el = document.querySelector(sel);
       if (!el) return;
@@ -152,18 +300,31 @@
         scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
       });
     });
-
-    /* fotky v příběhu se při scrollu lehce rozestoupí */
-    gsap.to('.lace-frame', {
-      y: -22,
-      ease: 'none',
-      scrollTrigger: { trigger: '.story', start: 'top bottom', end: 'bottom top', scrub: true }
-    });
     gsap.to('.inset-frame', {
       y: 26,
       ease: 'none',
       scrollTrigger: { trigger: '.story', start: 'top bottom', end: 'bottom top', scrub: true }
     });
+
+    /* --- 13. Vlnky mezi sekcemi se lehce vlní --- */
+    document.querySelectorAll('.divider svg').forEach(function (svg, i) {
+      gsap.to(svg, {
+        xPercent: i % 2 ? 2.5 : -2.5,
+        ease: 'none',
+        scrollTrigger: { trigger: svg, start: 'top bottom', end: 'bottom top', scrub: true }
+      });
+    });
+
+    /* zbytek .rev prvků (bez vlastní animace) prostě odkryjeme */
+    ScrollTrigger.batch('.rev', {
+      start: 'top 90%',
+      once: true,
+      onEnter: function (batch) {
+        batch.forEach(function (el) { el.classList.add('in'); });
+      }
+    });
+
+    ScrollTrigger.refresh();
   }
 
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -177,5 +338,8 @@
     initMotion();
   } else {
     initReveal();
+    document.querySelectorAll('[data-count]').forEach(function (el) {
+      el.textContent = el.dataset.count.replace('.', ',');
+    });
   }
 })();

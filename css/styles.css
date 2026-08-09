@@ -143,6 +143,20 @@ body::after {
 .squiggle--center { margin-inline: auto; }
 .squiggle svg { width: 100%; height: 100%; display: block; overflow: visible; }
 
+/* ---------- Animace textu: slova v masce ---------- */
+.w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: .08em;
+}
+.wi {
+  display: inline-block;
+  will-change: transform;
+}
+/* dokud JS nenaběhne, text je vidět normálně */
+.no-js .w, .no-js .wi { overflow: visible; }
+
 /* ---------- Reveal kontrakt (.rev + .in) ---------- */
 .rev {
   opacity: 0;
@@ -300,10 +314,12 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
   display: block;
   height: 30px;
   line-height: 0;
+  overflow: hidden;
 }
 .divider svg {
   display: block;
-  width: 100%;
+  width: 112%;
+  margin-left: -6%;
   height: 100%;
 }
 
@@ -747,6 +763,22 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
 .pcard--big .pcard-media img { aspect-ratio: 16 / 11; }
 .pcard:hover .pcard-media img { transform: scale(1.06); }
 
+/* produktové výřezy na bílém → pastelové pozadí + halftone, ať nevypadají vystřiženě */
+.pcard-media--cut {
+  background-image: radial-gradient(rgba(43, 21, 22, .07) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
+}
+.pcard-media--cut img {
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  padding: 8%;
+}
+.pcard--big .pcard-media--cut img { padding: 5% 12%; }
+.tint-pink { background-color: var(--pink-light); }
+.tint-cream { background-color: #FFF7EE; }
+.tint-pist { background-color: #DDF0E7; }
+.tint-butter { background-color: #FDEFC4; }
+
 .pcard-body {
   display: flex;
   flex-direction: column;
@@ -859,53 +891,117 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
 }
 
 /* ---------- Dorty na počkání ---------- */
-.express { padding-block: clamp(3.5rem, 7vw, 5.5rem); }
-.express-card {
+.express {
   position: relative;
+  padding-block: clamp(3.5rem, 7vw, 5.5rem);
+}
+.express-head {
+  max-width: 660px;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+.express-head h2 { margin-bottom: .35em; }
+.express-lead { font-weight: 500; margin: 0; }
+
+.steps-row {
   display: grid;
-  grid-template-columns: 1.1fr .9fr;
-  gap: 2rem;
-  align-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+.step {
+  position: relative;
   background: var(--pink-light);
   border: var(--ol);
-  border-radius: 26px;
+  border-radius: 22px;
   box-shadow: var(--shadow);
-  padding: clamp(1.8rem, 4vw, 3.2rem);
+  padding: 2.4rem 1.5rem 1.5rem;
+  transition: transform .35s var(--spring), box-shadow .35s var(--spring);
 }
-.express-copy h2 { margin-bottom: .4em; }
-.steps { margin-top: .2rem; }
+.step:nth-child(2) { background: #DDF0E7; }
+.step:nth-child(3) { background: #FDEFC4; }
+.step:hover {
+  transform: translateY(-7px);
+  box-shadow: 9px 11px 0 var(--ink);
+}
+.step-num {
+  position: absolute;
+  top: -20px;
+  left: 1.4rem;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--cherry);
+  color: var(--cream);
+  border: var(--ol);
+  box-shadow: 3px 3px 0 var(--ink);
+  font-family: var(--agbalumo);
+  font-size: 1.1rem;
+  transform: rotate(-6deg);
+}
+.step-ico {
+  display: block;
+  width: 58px;
+  height: 62px;
+  margin: .2rem 0 .9rem auto;
+  line-height: 0;
+}
+.step-ico svg { width: 100%; height: 100%; }
+.step h3 { margin-bottom: .3em; }
+.step p { font-size: .88rem; line-height: 1.55; margin: 0; color: #5d4a45; }
+
+.express-strip {
+  display: grid;
+  grid-template-columns: 1.35fr .9fr;
+  gap: 1.8rem;
+  align-items: center;
+}
+.express-photo {
+  position: relative;
+  margin: 0;
+  border: var(--ol);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transform: rotate(-1deg);
+}
+.express-photo img {
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  object-fit: cover;
+  display: block;
+}
+.express-cta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.express-badge {
+  transform: rotate(7deg);
+  --r: 7deg;
+  animation: bob 5.4s ease-in-out infinite;
+}
 .couriers {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: .55rem;
+  gap: .5rem;
   font-weight: 700;
-  font-size: .85rem;
+  font-size: .82rem;
   text-transform: uppercase;
-  letter-spacing: .08em;
-  margin: 1.1rem 0 1.4rem;
+  letter-spacing: .07em;
+  margin: 0;
 }
-.express-photo {
-  position: relative;
-  margin-top: clamp(-4.5rem, -6vw, -2rem);
-  transform: rotate(-2deg);
-  transition: transform .35s var(--spring);
-}
-.express-card:hover .express-photo { transform: rotate(-.6deg); }
-.express-photo img {
-  border: var(--ol);
-  border-radius: 18px;
-  box-shadow: var(--shadow-sm);
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
-.express-badge {
-  position: absolute;
-  top: -28px;
-  right: -14px;
-  transform: rotate(8deg);
-  animation: bob 5s ease-in-out infinite;
+
+@media (max-width: 900px) {
+  .steps-row { grid-template-columns: 1fr; gap: 2.2rem; }
+  .express-strip { grid-template-columns: 1fr; }
+  .express-cta { align-items: center; text-align: center; }
+  .couriers { justify-content: center; }
 }
 
 /* ---------- Svatby + Firmy (pbannery) ---------- */
@@ -1238,8 +1334,8 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
 .best-pusinka { width: 64px; bottom: 3.5rem; left: 3.5%; transform: rotate(6deg); }
 
 /* express */
-.express-macaron { width: 78px; left: -26px; bottom: -24px; transform: rotate(-12deg); z-index: 3; }
-.express-sprinkles { width: 90px; right: -18px; top: -30px; transform: rotate(24deg); }
+.express-macaron { width: 78px; left: 2%; bottom: 8%; transform: rotate(-12deg); z-index: 3; }
+.express-sprinkles { width: 90px; right: 2%; top: 4%; transform: rotate(24deg); }
 
 /* recenze */
 .rev-pusinka { width: 84px; top: 3.2rem; left: 7%; transform: rotate(-8deg); }
