@@ -145,7 +145,6 @@
      --------------------------------------------------------------- */
   function initMotion() {
     gsap.registerPlugin(ScrollTrigger);
-    gsap.defaults({ overwrite: 'auto' });
 
     /* --- 1. Nadpisy: slova vyjedou zespodu z masky --- */
     document.querySelectorAll('.anim-head').forEach(function (head) {
@@ -163,14 +162,17 @@
 
     /* --- 2. Odstavce a drobné prvky: jemný nájezd --- */
     document.querySelectorAll('.anim-up').forEach(function (el) {
-      gsap.from(el, {
-        y: 26,
-        opacity: 0,
-        duration: .7,
-        ease: 'power2.out',
-        delay: parseFloat(el.dataset.delay || 0),
-        scrollTrigger: { trigger: el, start: 'top 90%', once: true }
-      });
+      gsap.fromTo(el,
+        { y: 26, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: .7,
+          ease: 'power2.out',
+          delay: parseFloat(el.dataset.delay || 0),
+          scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+        }
+      );
     });
 
     /* --- 3. Obrázky: odkryjí se stěrkou zdola nahoru --- */
@@ -191,29 +193,37 @@
     document.querySelectorAll('[data-stagger]').forEach(function (group) {
       var items = group.querySelectorAll(group.dataset.stagger);
       if (!items.length) return;
-      gsap.from(items, {
-        y: 46,
-        opacity: 0,
-        scale: .94,
-        duration: .7,
-        ease: 'back.out(1.4)',
-        stagger: { each: .07, from: 'start' },
-        scrollTrigger: { trigger: group, start: 'top 85%', once: true }
-      });
+      gsap.fromTo(items,
+        { y: 46, opacity: 0, scale: .94 },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: .7,
+          ease: 'back.out(1.4)',
+          stagger: { each: .07, from: 'start' },
+          clearProps: 'transform',
+          scrollTrigger: { trigger: group, start: 'top 85%', once: true }
+        }
+      );
     });
 
     /* --- 5. Chipy / odrážky: popnou jeden po druhém --- */
     document.querySelectorAll('[data-pop]').forEach(function (group) {
       var items = group.querySelectorAll(group.dataset.pop);
       if (!items.length) return;
-      gsap.from(items, {
-        scale: .3,
-        opacity: 0,
-        duration: .5,
-        ease: 'back.out(2.2)',
-        stagger: .06,
-        scrollTrigger: { trigger: group, start: 'top 90%', once: true }
-      });
+      gsap.fromTo(items,
+        { scale: .3, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: .5,
+          ease: 'back.out(2.2)',
+          stagger: .06,
+          clearProps: 'transform',
+          scrollTrigger: { trigger: group, start: 'top 90%', once: true }
+        }
+      );
     });
 
     /* --- 6. Čísla se načítají --- */
@@ -229,13 +239,17 @@
     /* --- 7. Pečeť 1992 přiletí a doskočí --- */
     var seal = document.querySelector('.seal');
     if (seal) {
-      gsap.from(seal, {
-        scale: 0,
-        rotate: -140,
-        duration: .8,
-        ease: 'back.out(1.7)',
-        scrollTrigger: { trigger: seal, start: 'top 92%', once: true }
-      });
+      gsap.fromTo(seal,
+        { scale: 0, rotate: -140 },
+        {
+          scale: 1,
+          rotate: 0,
+          duration: .8,
+          ease: 'back.out(1.7)',
+          clearProps: 'transform',
+          scrollTrigger: { trigger: seal, start: 'top 92%', once: true }
+        }
+      );
     }
 
     /* --- 8. Hero intro po načtení --- */
@@ -246,11 +260,17 @@
       gsap.set(hw, { yPercent: 118, rotate: 5 });
       tl.to(hw, { yPercent: 0, rotate: 0, duration: .95, stagger: .075 }, .15);
     }
-    tl.from('.hero-sub', { y: 24, opacity: 0, duration: .7 }, '-=.5')
-      .from('.hero-ctas .btn', { y: 20, opacity: 0, scale: .92, duration: .55, stagger: .1, ease: 'back.out(1.6)' }, '-=.35')
-      .from('.trust-chip', { y: 16, opacity: 0, duration: .5 }, '-=.3')
-      .from('.hero-frame', { y: 60, rotate: -8, opacity: 0, duration: 1, ease: 'back.out(1.2)' }, .3)
-      .from('.hero-stage .deco', { scale: 0, opacity: 0, duration: .6, stagger: .12, ease: 'back.out(2)' }, '-=.4');
+    tl.fromTo('.hero-sub', { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: .7 }, '-=.5')
+      .fromTo('.hero-ctas .btn',
+        { y: 20, opacity: 0, scale: .92 },
+        { y: 0, opacity: 1, scale: 1, duration: .55, stagger: .1, ease: 'back.out(1.6)', clearProps: 'transform' }, '-=.35')
+      .fromTo('.trust-chip', { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: .5, clearProps: 'transform' }, '-=.3')
+      .fromTo('.hero-frame',
+        { y: 60, rotate: -9, opacity: 0 },
+        { y: 0, rotate: -1.8, opacity: 1, duration: 1, ease: 'back.out(1.2)', clearProps: 'transform' }, .3)
+      .fromTo('.hero-stage .deco',
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: .6, stagger: .12, ease: 'back.out(2)' }, '-=.4');
 
     /* --- 9. Hero parallax --- */
     gsap.to('.hero-copy', {
@@ -324,6 +344,17 @@
       }
     });
 
+    /* --- Pojistky: dopočítat pozice, až doběhne layout a obrázky --- */
+    var refreshTimer;
+    function scheduleRefresh() {
+      clearTimeout(refreshTimer);
+      refreshTimer = setTimeout(function () { ScrollTrigger.refresh(); }, 120);
+    }
+    document.querySelectorAll('img').forEach(function (img) {
+      if (!img.complete) img.addEventListener('load', scheduleRefresh, { once: true });
+    });
+    window.addEventListener('load', scheduleRefresh);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleRefresh);
     ScrollTrigger.refresh();
   }
 
