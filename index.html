@@ -260,46 +260,68 @@
       <svg viewBox="0 0 120 26" preserveAspectRatio="none"><path d="M0 26 A 15 22 0 0 1 30 26 A 15 22 0 0 1 60 26 A 15 22 0 0 1 90 26 A 15 22 0 0 1 120 26 Z" fill="#FDF2E7"/></svg>
     </div>
 
-    <section id="na-pockani" class="express" aria-label="Dorty na počkání">
-      <span class="deco float-deco express-macaron" aria-hidden="true"><svg><use href="#i-macaron"/></svg></span>
-      <span class="deco express-sprinkles" aria-hidden="true"><svg><use href="#i-sprinkles"/></svg></span>
+    <section id="na-pockani" class="express" aria-labelledby="pockani-title">
       <div class="container">
-        <div class="express-head">
-          <p class="anim-up"><span class="eyebrow">Dortová pohotovost</span></p>
-          <h2 class="anim-head">Dort ještě dnes? <span class="accent-cherry">Není problém.</span></h2>
-          <p class="express-lead anim-up" data-delay=".1">Každý den máme ve vitríně čerstvé dorty k okamžitému odběru. Na místě je dozdobíme ovocem i osobním věnováním.</p>
-        </div>
+        <div class="xp-panel">
+          <span class="deco xp-deco-sprinkles" aria-hidden="true"><svg><use href="#i-sprinkles"/></svg></span>
 
-        <div class="steps-row" data-stagger=".step">
-          <article class="step">
-            <span class="step-num">01</span>
-            <span class="step-ico" aria-hidden="true"><svg><use href="#i-cupcake"/></svg></span>
-            <h3>Vyberete z vitríny</h3>
-            <p>Denně až 20 druhů dortů — čokoládové, ovocné i lehké s mascarpone.</p>
-          </article>
-          <article class="step">
-            <span class="step-num">02</span>
-            <span class="step-ico" aria-hidden="true"><svg><use href="#i-pusinka-pink"/></svg></span>
-            <h3>Dozdobíme na místě</h3>
-            <p>Čerstvé ovoce, krém a nápis na přání. Zabalíme tak, aby dojel v pořádku.</p>
-          </article>
-          <article class="step">
-            <span class="step-num">03</span>
-            <span class="step-ico" aria-hidden="true"><svg><use href="#i-heart"/></svg></span>
-            <h3>Do 15 minut slavíte</h3>
-            <p>Vyzvednete si ho u nás, nebo pošleme kurýrem po Brně.</p>
-          </article>
-        </div>
+          <div class="xp-copy">
+            <p class="anim-up"><span class="chip chip--butter xp-kicker">Dortová pohotovost</span></p>
+            <h2 id="pockani-title" class="xp-title anim-head">Dort ještě dnes? <span class="accent-cherry">Není problém.</span></h2>
+            <p class="xp-lead anim-up" data-delay=".08">Každý den máme ve vitríně čerstvé dorty k okamžitému odběru. Na místě je dozdobíme ovocem i osobním věnováním.</p>
 
-        <div class="express-strip">
-          <figure class="express-photo anim-img">
-            <img src="images/banner-pockani.webp" alt="Cukrářka zdobí dort v naší dílně" loading="lazy" width="768" height="234">
-          </figure>
-          <div class="express-cta">
-            <span class="badge-circle express-badge" aria-hidden="true">Ještě dnes!</span>
-            <p class="couriers" data-pop="span.chip">Rozvoz po Brně: <span class="chip">Bolt</span> <span class="chip">Foodora</span> <span class="chip">Wolt</span></p>
-            <a class="btn btn--cherry" href="/404">Dorty na počkání <span class="arr">→</span></a>
+            <ol class="xp-steps" data-stagger=".xp-step">
+              <li class="xp-step">
+                <span class="xp-num xp-num--1" aria-hidden="true">1</span>
+                <div class="xp-step-body">
+                  <div class="xp-step-head">
+                    <h3>Vyberete z vitríny</h3>
+                    <span class="plate xp-plate">20 druhů</span>
+                  </div>
+                  <p>Čokoládové, ovocné i lehké s mascarpone — vždy čerstvé.</p>
+                </div>
+              </li>
+              <li class="xp-step">
+                <span class="xp-num xp-num--2" aria-hidden="true">2</span>
+                <div class="xp-step-body">
+                  <div class="xp-step-head">
+                    <h3>Dozdobíme podle vás</h3>
+                    <span class="plate xp-plate">Na místě</span>
+                  </div>
+                  <p>Čerstvé ovoce, krém a nápis na přání. Zabalíme tak, aby dojel v pořádku.</p>
+                </div>
+              </li>
+              <li class="xp-step">
+                <span class="xp-num xp-num--3" aria-hidden="true">3</span>
+                <div class="xp-step-body">
+                  <div class="xp-step-head">
+                    <h3>Vyzvednete nebo pošleme</h3>
+                    <span class="plate xp-plate xp-plate--hot">Do 15 minut</span>
+                  </div>
+                  <p>Osobně u nás v Králově Poli, nebo kurýrem po Brně.</p>
+                </div>
+              </li>
+            </ol>
+
+            <p class="xp-action"><a class="btn btn--cherry" href="/404">Dnešní nabídka dortů <span class="arr">→</span></a></p>
           </div>
+
+          <figure class="xp-media dots">
+            <span class="badge-circle xp-sticker" aria-hidden="true">Ještě dnes!</span>
+            <div class="xp-photo">
+              <div class="xp-photo-clip anim-img">
+                <img src="images/real-karmelka.webp" alt="Borůvkový cheesecake připravený k okamžitému odběru" width="1300" height="1300" loading="lazy" decoding="async">
+              </div>
+            </div>
+            <div class="xp-strip">
+              <span class="xp-strip-label">Rozvoz po Brně</span>
+              <ul class="xp-couriers" data-pop="li">
+                <li>Bolt</li>
+                <li>Foodora</li>
+                <li>Wolt</li>
+              </ul>
+            </div>
+          </figure>
         </div>
       </div>
     </section>

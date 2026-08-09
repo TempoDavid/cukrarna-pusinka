@@ -184,6 +184,8 @@
           scale: 1,
           duration: 1.05,
           ease: 'power3.out',
+          /* clip-path musí zmizet, jinak by ořezával i tvrdý stín prvku */
+          clearProps: 'clipPath',
           scrollTrigger: { trigger: el, start: 'top 88%', once: true }
         }
       );

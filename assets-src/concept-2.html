@@ -1,0 +1,343 @@
+<!DOCTYPE html><html lang=cs><head><meta charset=UTF-8><link rel=stylesheet href="../css/styles.css"><style>body{margin:0}/* ==========================================================================
+   Dorty na počkání — „účtenka“ (horizontální timeline + cinematic banner)
+   Nahrazuje původní blok .express-head / .steps-row / .step / .express-strip
+   ========================================================================== */
+.express {
+  position: relative;
+  padding-block: clamp(3rem, 6vw, 4.5rem);
+}
+
+/* ---------- 1. Kompaktní hlavička ---------- */
+.xp-head {
+  max-width: 940px;
+  margin: 0 auto clamp(1.4rem, 2.4vw, 1.8rem);
+  text-align: center;
+}
+.xp-kicker { margin: 0 0 .85rem; }
+.xp-kicker .chip { padding: .45rem 1.05rem; }
+.xp-head h2 {
+  font-size: clamp(1.8rem, 3.7vw, 2.65rem);
+  margin-bottom: .32em;
+}
+.xp-lead {
+  max-width: 640px;
+  margin: 0 auto;
+  font-weight: 500;
+  text-wrap: balance;
+}
+
+/* ---------- 2. Účtenka: tři kroky na jedné lince ---------- */
+.xp-strip {
+  --node: 56px;
+  --g: 1.6rem;
+  position: relative;
+  background: #fff;
+  border: var(--ol);
+  border-radius: 26px;
+  box-shadow: var(--shadow);
+  padding: 1.7rem clamp(1.1rem, 2.6vw, 2.2rem) 1.5rem;
+  margin-bottom: clamp(2rem, 2.8vw, 2.3rem);
+  transform: rotate(-.45deg);
+}
+/* třešeň nalepená na rohu účtenky */
+.xp-sticker {
+  position: absolute;
+  z-index: 3;
+  top: -20px;
+  left: -14px;
+  width: 56px;
+  height: 56px;
+  line-height: 0;
+  pointer-events: none;
+  transform: rotate(-14deg);
+}
+.xp-sticker svg { width: 100%; height: 100%; display: block; }
+
+.xp-steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--g);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* přerušovaná linka přesně mezi středy prvního a posledního kolečka */
+.xp-steps::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: calc(var(--node) / 2);
+  left: calc((100% - 2 * var(--g)) / 6);
+  right: calc((100% - 2 * var(--g)) / 6);
+  border-top: 3px dashed var(--ink);
+}
+.xp-step {
+  position: relative;
+  margin: 0;
+  text-align: center;
+}
+/* šipka přesně v půli mezery mezi kroky */
+.xp-step + .xp-step::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: calc(var(--node) / 2);
+  left: calc(var(--g) / -2);
+  width: 11px;
+  height: 11px;
+  border-top: 3px solid var(--ink);
+  border-right: 3px solid var(--ink);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.xp-node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--node);
+  height: var(--node);
+  margin: 0 auto .6rem;
+  border: var(--ol);
+  border-radius: 50%;
+  background: var(--pink-light);
+  box-shadow: var(--shadow-sm);
+}
+.xp-step:nth-child(2) .xp-node { background: var(--pistachio); }
+.xp-step:nth-child(3) .xp-node { background: var(--butter); }
+.xp-ico { width: 33px; height: 33px; display: block; }
+.xp-ico--cupcake { width: 30px; height: 36px; }
+
+.xp-num {
+  position: absolute;
+  top: -12px;
+  left: -13px;
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  border: var(--ol);
+  border-radius: 50%;
+  background: var(--cherry);
+  color: var(--cream);
+  font-family: var(--agbalumo);
+  font-size: .76rem;
+  line-height: 1;
+  transform: rotate(-8deg);
+}
+
+.xp-step h3 {
+  font-size: clamp(1.1rem, 1.7vw, 1.38rem);
+  margin: 0 0 .3em;
+}
+.xp-step p {
+  margin: 0;
+  font-size: .85rem;
+  line-height: 1.5;
+  color: #5D4A45;
+  text-wrap: pretty;
+}
+
+/* ---------- 3. Široký banner + odtrhávací lišta ---------- */
+.xp-banner {
+  position: relative;
+  background: #fff;
+  border: var(--ol);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  transform: rotate(.35deg);
+}
+.xp-photo {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 21px 21px 0 0;
+}
+.xp-photo img {
+  display: block;
+  width: 100%;
+  height: clamp(160px, 15vw, 205px);
+  object-fit: cover;
+  object-position: 50% 40%;
+}
+.xp-badge {
+  position: absolute;
+  z-index: 2;
+  top: -20px;
+  right: 24px;
+  width: 104px;
+  height: 104px;
+  font-size: .7rem;
+  --r: 9deg;
+  transform: rotate(9deg);
+  animation: bob 5.4s ease-in-out infinite;
+}
+
+.xp-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem 1.4rem;
+  padding: .72rem 1rem .72rem 1.3rem;
+  background: #fff;
+  border-top: 3px dashed var(--ink);
+  border-radius: 0 0 21px 21px;
+}
+.xp-couriers {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .5rem .55rem;
+  margin: 0;
+}
+.xp-couriers-label {
+  font-weight: 700;
+  font-size: .74rem;
+  text-transform: uppercase;
+  letter-spacing: .13em;
+}
+.xp-bar .chip { box-shadow: 3px 3px 0 var(--ink); }
+.xp-cta { padding: .8rem 1.45rem; }
+
+/* ---------- Responsivita ---------- */
+@media (max-width: 1080px) {
+  .xp-strip { --g: 1.2rem; }
+}
+@media (max-width: 900px) {
+  .xp-head { margin-bottom: 1.5rem; }
+  .xp-strip {
+    --g: 1.5rem;
+    padding: 1.5rem 1.2rem 1.3rem;
+    margin-bottom: 2.2rem;
+    transform: rotate(-.3deg);
+  }
+  .xp-sticker { width: 46px; height: 46px; top: -16px; left: -8px; }
+  .xp-steps { grid-template-columns: 1fr; }
+  .xp-steps::before { display: none; }
+
+  /* kolečko vlevo, text vpravo */
+  .xp-step {
+    display: grid;
+    grid-template-columns: var(--node) 1fr;
+    column-gap: 1.05rem;
+    text-align: left;
+  }
+  .xp-node { grid-column: 1; grid-row: 1 / span 2; margin: 0; }
+  .xp-step h3 { grid-column: 2; grid-row: 1; }
+  .xp-step p  { grid-column: 2; grid-row: 2; }
+
+  /* linka se překlopí do svislé */
+  .xp-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: calc(var(--node) + 9px);
+    bottom: calc(var(--g) * -1 + 9px);
+    left: calc(var(--node) / 2);
+    border-left: 3px dashed var(--ink);
+    transform: translateX(-1.5px);
+  }
+  .xp-step + .xp-step::before {
+    top: calc(var(--g) / -2);
+    left: calc(var(--node) / 2);
+    transform: translate(-50%, -50%) rotate(135deg);
+  }
+
+  .xp-banner { transform: rotate(.25deg); }
+  .xp-badge { width: 84px; height: 84px; font-size: .62rem; top: -17px; right: 8px; }
+  .xp-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: .8rem;
+    padding: .85rem 1rem;
+  }
+  .xp-couriers { justify-content: center; }
+  .xp-cta { justify-content: center; }
+}
+@media (max-width: 420px) {
+  .xp-couriers-label { width: 100%; text-align: center; }
+}</style></head><body><svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-bunting" viewBox="0 0 240 70"><path d="M13 22.3 Q25.7 24.8 38 28 Q33.5 39.5 27 49.5 Q19.5 37.5 13 22.3 Z" fill="#EF7E88" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M47 31.6 Q60 33.6 73 34.4 Q68 46 61.5 58 Q53 45 47 31.6 Z" fill="#F7C948" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M86.5 36.3 Q99.5 38.2 112.5 37.7 Q107 50 100 61.8 Q92.5 49.5 86.5 36.3 Z" fill="#A8D8C2" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M127.5 37.7 Q140.5 38.8 153.5 36.3 Q147.5 49.5 140.5 61.5 Q133.5 49.8 127.5 37.7 Z" fill="#FDF2E7" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M167 34.4 Q180 34 193 31.7 Q186.8 45 179.5 57.5 Q172.5 45.8 167 34.4 Z" fill="#EF7E88" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M202 28 Q214.5 25.8 227 22.4 Q221 36 214.8 49.3 Q207.5 38.5 202 28 Z" fill="#F7C948" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 17.5 C59 44.5 181 43.5 233 18.5" fill="none" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 17.5 Q3 14.5 5 9.5" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M233 18.5 Q237 15.5 235 10.5" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 100 100"><path d="M50 30 C45 19.5 32 13 21.5 19 C10.5 25.5 9.5 40.5 17.5 51.5 C25.5 62.5 37.5 71.5 49.5 80.5 C62 71.5 74.5 62 82.5 51 C90.5 40 89 25.5 78.5 19.5 C68 13.5 55.5 20.5 50 30 Z" fill="#EF7E88" stroke="#2B1516" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M25 31.5 Q25.4 24 33 22.4 Q38.2 21.5 37 25 Q31.5 26.8 30 32.6 Q26 35.3 25 31.5 Z" fill="#fff" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pusinka-cream" viewBox="0 0 100 100"><path d="M18 82 Q30 90 50 88 Q70 91 82 82 C91 76 90 64 71 60 C84 57 82 45 64 40 C74 36 70 26 56 20 C59 13 54 5 46 8 C41 10 42 16 48 18 C39 20 28 27 37 40 C24 45 17 54 29 60 C15 65 9 75 18 82 Z" fill="#FDF2E7" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M29 60 Q50 69 71 60" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 40 Q50 48 64 40" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M48 18 Q53 22 58 19" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pusinka-pink" viewBox="0 0 100 100"><path d="M18 82 Q30 90 50 88 Q70 91 82 82 C91 76 90 64 71 60 C84 57 82 45 64 40 C74 36 70 26 56 20 C59 13 54 5 46 8 C41 10 42 16 48 18 C39 20 28 27 37 40 C24 45 17 54 29 60 C15 65 9 75 18 82 Z" fill="#EF7E88" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M29 60 Q50 69 71 60" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 40 Q50 48 64 40" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M48 18 Q53 22 58 19" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-sprinkles" viewBox="0 0 100 68"><rect x="-7" y="-3" width="14" height="6" rx="3" transform="translate(14 14) rotate(24)" fill="#EF7E88" stroke="#2B1516" stroke-width="2.5" stroke-linejoin="round"/><rect x="-6.5" y="-2.75" width="13" height="5.5" rx="2.75" transform="translate(42 10) rotate(-32)" fill="#A8D8C2" stroke="#2B1516" stroke-width="2.5" stroke-linejoin="round"/><rect x="-7" y="-3" width="14" height="6" rx="3" transform="translate(72 16) rotate(62)" fill="#F7C948" stroke="#2B1516" stroke-width="2.5" stroke-linejoin="round"/><rect x="-6" y="-2.75" width="12" height="5.5" rx="2.75" transform="translate(90 34) rotate(-18)" fill="#960016" stroke="#2B1516" stroke-width="2.5" stroke-linejoin="round"/><rect x="-6.5" y="-3" width="13" height="6" rx="3" transform="translate(26 34) rotate(85)" fill="#F7C948" stroke="#2B1516" stroke-width="2.5" stroke-linejoin="round"/><rect x="-7.5" y="-3" width="15" height="6" rx="3" transform="translate(55 32) rotate(8)" fill="#EF7E88" stroke="#2B1516" stroke-width="2.5" stroke-linejoin="round"/><rect x="-6.5" y="-2.75" width="13" height="5.5" rx="2.75" transform="translate(80 54) rotate(40)" fill="#A8D8C2" stroke="#2B1516" stroke-width="2.5" stroke-linejoin="round"/><rect x="-7" y="-3" width="14" height="6" rx="3" transform="translate(38 56) rotate(-55)" fill="#960016" stroke="#2B1516" stroke-width="2.5" stroke-linejoin="round"/><rect x="-6" y="-2.75" width="12" height="5.5" rx="2.75" transform="translate(12 52) rotate(-70)" fill="#EF7E88" stroke="#2B1516" stroke-width="2.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cupcake" viewBox="0 0 100 120"><path d="M16,70 C11,63 14,55 22,54 C17,47 23,41 31,41 C26,33 33,26 42,27 Q44,18 52,17 Q60,18 62,27 C71,27 76,34 71,41 C79,42 84,48 78,54 C86,56 88,64 83,70 C74,74 62,75.5 50,75.5 C38,75.5 25,74 16,70 Z" fill="#FDF2E7" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M23,55 Q49,62.5 77,54" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32,41.5 Q50,48 70,41" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M52.5,7 Q51.5,3.5 56,2" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M52,6.5 C56.5,6 60,9 59.8,13 C59.6,17.2 56.5,19.8 52.3,19.6 C48,19.4 45,16.6 45.2,12.6 C45.4,8.8 48.2,7 52,6.5 Z" fill="#960016" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M48.8,10.6 Q48.2,12.2 49,13.8" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><path d="M22,68 C24.5,80 27.5,92 31.5,100 Q32.5,102 35,102 L65,102 Q67.5,102 68.5,100 C72.5,92 75.5,80 78,68 C70,71.5 60,72.6 50,72.6 C40,72.6 30,71.5 22,68 Z" fill="#EF7E88" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M33.5,72 Q34.5,86 37.5,99.5" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round"/><path d="M44,73 Q44.5,87 46,100.5" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round"/><path d="M56,73 Q55.5,87 54.5,100.5" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round"/><path d="M66.5,72 Q65.5,86 62.5,99.5" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-cherry" viewBox="0 0 100 100"><path d="M53,21 Q52,16 56.5,13" fill="none" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M53,21 Q43,32 36,56" fill="none" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M53,21 Q61,36 65,55" fill="none" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M55,18 Q60,10 72,11.5 Q71.5,21 60.5,24 Q56,23 55,18 Z" fill="#A8D8C2" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M59,18.5 Q64.5,16 69.5,13.5" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round"/><path d="M67,52.5 C76,52.8 81.8,59.5 81,68.5 C80.2,77.5 73.8,83 65.8,82.6 C57.8,82.2 52.2,75.8 53,67.2 C53.8,58.5 58.5,52.2 67,52.5 Z" fill="#960016" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M35,54.5 C45,53.5 51.5,61 50.8,71 C50,81 43.5,87.5 34,87 C24.5,86.5 18.5,79.5 19.3,70 C20.1,60.8 26,55.3 35,54.5 Z" fill="#960016" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M27.5,63 Q26,67.5 27.8,71.5" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/><path d="M31.5,59.5 L31.9,59.9" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/><path d="M60,60.5 Q58.8,64.5 60.4,68" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-coffee" viewBox="0 0 100 100"><ellipse cx="50" cy="74.5" rx="33" ry="8.5" fill="#FFE3EA" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="50" cy="73.5" rx="20" ry="4.2" fill="#FDF2E7" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M70 43.5 C83 39 93 46.5 89.5 55.5 C86.5 63.5 77 66.5 67 63.5 L68.5 57.5 C76 59.5 82 57 83 51.5 C83.8 46.8 78.5 44 71 47.3 Z" fill="#FDF2E7" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 36 C27 46 29.5 58 33.5 65.5 C36.5 70 43 71.5 50 71.5 C57 71.5 63.5 70 66.5 65.5 C70.5 58 73 46 74 36.5 C70 33.2 61 31.4 50 31.4 C39 31.4 29.8 33 26 36 Z" fill="#FDF2E7" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M27.7 45.3 C39 47.4 61 47.4 72.3 45.5 L71.2 52.8 C58 54.8 42 54.8 28.9 52.9 Z" fill="#EF7E88" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 36 C29.8 33 39 31.4 50 31.4 C61 31.4 70 33.2 74 36.5 C70.5 39.8 61 41.6 50 41.6 C39 41.6 29.5 39.6 26 36 Z" fill="#FDF2E7" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 36.2 C35 34.1 42.5 33 50 33 C57.5 33 65 34.3 68 36.4 C65 38.5 57.5 39.7 50 39.7 C42.5 39.7 35 38.3 32 36.2 Z" fill="#642F21" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 27 C34 22.5 40 19.5 37 14.5 C35 11 38.6 8.5 37.8 5.5" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M51 25.5 C47.5 21 53 17 50.5 12 C48.8 8.5 52.4 6 51.4 3.2" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M64 27.5 C61 23.5 66 20.5 63.2 15.8 C61.4 12.5 64.8 10 64 7.2" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-coffee-mint" viewBox="0 0 100 100"><ellipse cx="50" cy="74.5" rx="33" ry="8.5" fill="#FFE3EA" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="50" cy="73.5" rx="20" ry="4.2" fill="#FDF2E7" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M70 43.5 C83 39 93 46.5 89.5 55.5 C86.5 63.5 77 66.5 67 63.5 L68.5 57.5 C76 59.5 82 57 83 51.5 C83.8 46.8 78.5 44 71 47.3 Z" fill="#A8D8C2" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 36 C27 46 29.5 58 33.5 65.5 C36.5 70 43 71.5 50 71.5 C57 71.5 63.5 70 66.5 65.5 C70.5 58 73 46 74 36.5 C70 33.2 61 31.4 50 31.4 C39 31.4 29.8 33 26 36 Z" fill="#A8D8C2" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M27.7 45.3 C39 47.4 61 47.4 72.3 45.5 L71.2 52.8 C58 54.8 42 54.8 28.9 52.9 Z" fill="#EF7E88" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 36 C29.8 33 39 31.4 50 31.4 C61 31.4 70 33.2 74 36.5 C70.5 39.8 61 41.6 50 41.6 C39 41.6 29.5 39.6 26 36 Z" fill="#A8D8C2" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 36.2 C35 34.1 42.5 33 50 33 C57.5 33 65 34.3 68 36.4 C65 38.5 57.5 39.7 50 39.7 C42.5 39.7 35 38.3 32 36.2 Z" fill="#642F21" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M37.5 27 C34.8 22.8 40.2 19.8 37.6 15 C35.8 11.6 39 9 38.2 6" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M50.8 25.8 C54.2 21.2 48.8 17.4 51.2 12.4 C52.8 9 49.4 6.2 50.6 3.4" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M63.6 27.5 C60.8 23.8 65.8 20.8 63 16 C61.2 12.8 64.4 10.2 63.6 7.4" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-stand" viewBox="0 0 200 90"><path d="M92.6 35 C94.2 41.5 95.8 44 94.6 46.8 C87.6 49.6 86.8 57.4 93.4 60.4 C95.6 62.6 95.2 66 94.2 69.5 L105.8 69.7 C104.6 66 104.3 62.4 106.4 60.2 C113.2 57.2 112.6 49.4 105.2 46.6 C104.1 43.8 105.6 41.3 107.2 35.2 Z" fill="#FDF2E7" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M91.8 52.4 C96.6 54.6 103.6 54.6 108.3 52.3" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M94.8 65.5 C91.5 73 80.5 76.5 70 79.2 C67.6 80 67.2 82.6 69.6 83.2 C79 85.6 121 85.8 130.6 83 C133 82.3 132.6 79.8 130.2 79 C119.8 76.3 108.8 73 105.4 65.7 C102.4 67.4 97.6 67.3 94.8 65.5 Z" fill="#FDF2E7" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M72.5 79.6 C86 82.4 114 82.5 127.6 79.5" fill="none" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 21.8 Q30.6 40 41.3 31.2 Q51 46.4 60.8 36 Q70.6 49.8 80.6 37.6 Q90.2 51 100.2 37.9 Q110 51.2 119.6 37.4 Q129.4 50 139.2 36.2 Q149 46 158.7 31.4 Q169.4 40.4 178 21.9 Q100 27 22 21.8 Z" fill="#FDF2E7" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="31.6" cy="38.2" r="2" fill="#2B1516" stroke="#2B1516" stroke-width="1"/><circle cx="70.9" cy="47.6" r="2" fill="#2B1516" stroke="#2B1516" stroke-width="1"/><circle cx="129.4" cy="47.4" r="2" fill="#2B1516" stroke="#2B1516" stroke-width="1"/><circle cx="168.3" cy="38.5" r="2" fill="#2B1516" stroke="#2B1516" stroke-width="1"/><path d="M21 20.6 C22.2 14.2 55 10.6 99.5 10.9 C143 10.5 177.4 14.4 179 20.2 C177.8 26.4 144 29.8 100.5 29.5 C57 29.9 22.4 26.6 21 20.6 Z" fill="#FDF2E7" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M40.5 20 C42 15.6 68 14.3 100 14.5 C131 14.2 158 15.8 159.5 19.7 C158.2 23.9 132 25.4 100.4 25.2 C69 25.5 42 24 40.5 20 Z" fill="#fff" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-gingerbread" viewBox="0 0 100 100"><path d="M50 89 C34 75 11.5 57.5 12 35.5 C12.3 20.5 23.5 11.2 35 13 C43.8 14.4 48.6 21 50.4 27.2 C52.6 20.6 58.4 12.2 67 12.6 C78.5 13.1 88.6 21.5 88 36.5 C87.1 57 66 74.5 50 89 Z" fill="#642F21" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 77 Q45.6 75.7 42 69.5 Q39 63.4 33.5 61.5 Q28 58.4 27 53 Q27.3 48 22.5 43.5 Q19.6 38 21.5 34 Q25.4 31.6 25 26.5 Q26.5 22.3 31.5 21.8 Q36.3 24.4 38.5 22.8 Q40.3 22.8 44 27.5 Q46.6 32.7 48 33 Q48.6 35.5 50 36.5 Q51.4 35.5 52 33 Q53.9 32.7 57 27.5 Q60.8 22.9 62.5 22.8 Q64.4 24.4 69 21.8 Q74 22.4 75.5 26.5 Q75 31.6 78.8 34 Q80.8 38 78 43.5 Q73.3 48.1 73.5 53 Q72.5 58.4 67 61.5 Q61.4 63.4 58.5 69.5 Q54.7 75.7 50 77" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M47.2 45.7 C45.3 38.7 54.6 38.1 53 45.4 C60.2 40.7 63.3 50.2 54.9 51.1 C61 53.7 54.3 61.3 50.1 54.7 C45.4 61.2 39 53.6 45.3 51.2 C36.8 50.1 40 40.6 47.2 45.7 Z" fill="#EF7E88" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M50.2 46.3 C52.9 46.4 53.8 48 53.5 49.8 C53.2 51.8 51.5 52.9 49.6 52.7 C47.6 52.5 46.6 51.1 46.7 49.2 C46.8 47.3 48.3 46.2 50.2 46.3 Z" fill="#F7C948" stroke="#2B1516" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="36.5" cy="33.5" rx="2.2" ry="2.1" fill="#fff"/><ellipse cx="63.5" cy="33.5" rx="2.1" ry="2.2" fill="#fff"/><ellipse cx="50" cy="65.5" rx="2.3" ry="2.2" fill="#fff"/></symbol>
+    <symbol id="i-gingerbread-plain" viewBox="0 0 100 100"><path d="M50 89 C34 75 11.5 57.5 12 35.5 C12.3 20.5 23.5 11.2 35 13 C43.8 14.4 48.6 21 50.4 27.2 C52.6 20.6 58.4 12.2 67 12.6 C78.5 13.1 88.6 21.5 88 36.5 C87.1 57 66 74.5 50 89 Z" fill="#642F21" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 77 Q45.6 75.7 42 69.5 Q39 63.4 33.5 61.5 Q28 58.4 27 53 Q27.3 48 22.5 43.5 Q19.6 38 21.5 34 Q25.4 31.6 25 26.5 Q26.5 22.3 31.5 21.8 Q36.3 24.4 38.5 22.8 Q40.3 22.8 44 27.5 Q46.6 32.7 48 33 Q48.6 35.5 50 36.5 Q51.4 35.5 52 33 Q53.9 32.7 57 27.5 Q60.8 22.9 62.5 22.8 Q64.4 24.4 69 21.8 Q74 22.4 75.5 26.5 Q75 31.6 78.8 34 Q80.8 38 78 43.5 Q73.3 48.1 73.5 53 Q72.5 58.4 67 61.5 Q61.4 63.4 58.5 69.5 Q54.7 75.7 50 77" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="41.5" cy="46" rx="2.4" ry="2.2" fill="#fff"/><ellipse cx="57" cy="42.5" rx="2.1" ry="2.3" fill="#fff"/><ellipse cx="50" cy="57.5" rx="2.5" ry="2.3" fill="#fff"/></symbol>
+    <symbol id="i-macaron" viewBox="0 0 100 78"><path d="M11.5 36.5 C9.3 40.2 9.6 44.3 12.4 47.6 C37 50.3 63 50.1 87.6 47.2 C90.4 43.7 90.5 39.6 88.2 36.2 C62.5 32.8 37.5 33 11.5 36.5 Z" fill="#FDF2E7" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 34 C12 15.5 32.5 6.8 50.5 7 C68.5 6.7 88.5 15.8 87 34.2 Q83.2 39.6 78.8 34.6 Q74.6 39.1 70.2 34.3 Q65.5 39.4 61 34.5 Q56.4 38.9 51.6 34.2 Q46.6 39.5 42 34.6 Q37.4 38.8 32.8 34.3 Q28.2 39.2 23.6 34.6 Q18.6 38.6 13 34 Z" fill="#EF7E88" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.5 50 Q20.6 45.8 24.9 49.8 Q29.2 45.6 33.6 49.5 Q38 45.9 42.7 49.3 Q47.2 45.5 51.8 49.4 Q56.2 45.8 60.8 49.2 Q65.2 45.4 69.6 49.5 Q73.8 46 78.1 49.3 Q81.4 46.3 83.8 49.8 C86.2 61.5 73.5 70.8 50.5 71 C27 71.2 13.8 62 16.5 50 Z" fill="#EF7E88" stroke="#2B1516" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg><div style="padding:6px 12px;font:600 13px sans-serif;background:#222;color:#fff">2. Účtenka — horizontální timeline + odtrhávací CTA lišta</div><section id="na-pockani" class="express" aria-labelledby="pockani-title">
+  <div class="container">
+
+    <!-- 1 — kompaktní hlavička -->
+    <div class="xp-head">
+      <p class="xp-kicker anim-up">
+        <span class="chip chip--butter"><span class="eyebrow">Dortová pohotovost</span></span>
+      </p>
+      <h2 id="pockani-title" class="anim-head">Dort ještě dnes? <span class="accent-cherry">Není problém.</span></h2>
+      <p class="xp-lead anim-up" data-delay=".1">Každý den máme ve vitríně čerstvé dorty k okamžitému odběru. Dozdobíme je ovocem i osobním věnováním.</p>
+    </div>
+
+    <!-- 2 — účtenka: tři kroky na jedné lince -->
+    <div class="xp-strip">
+      <span class="xp-sticker" aria-hidden="true">
+        <svg width="56" height="56" viewBox="0 0 100 100" focusable="false"><use href="#i-cherry"/></svg>
+      </span>
+
+      <ol class="xp-steps" data-stagger=".xp-step">
+        <li class="xp-step">
+          <span class="xp-node">
+            <span class="xp-num" aria-hidden="true">01</span>
+            <svg class="xp-ico xp-ico--cupcake" width="30" height="36" viewBox="0 0 100 120" aria-hidden="true" focusable="false"><use href="#i-cupcake"/></svg>
+          </span>
+          <h3>Vyberete z vitríny</h3>
+          <p>Denně až 20 druhů dortů — čokoládové, ovocné i lehké s mascarpone.</p>
+        </li>
+
+        <li class="xp-step">
+          <span class="xp-node">
+            <span class="xp-num" aria-hidden="true">02</span>
+            <svg class="xp-ico" width="33" height="33" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#i-pusinka-pink"/></svg>
+          </span>
+          <h3>Dozdobíme na místě</h3>
+          <p>Čerstvé ovoce, krém a nápis na přání. Zabalíme tak, aby dojel v pořádku.</p>
+        </li>
+
+        <li class="xp-step">
+          <span class="xp-node">
+            <span class="xp-num" aria-hidden="true">03</span>
+            <svg class="xp-ico" width="33" height="33" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#i-heart"/></svg>
+          </span>
+          <h3>Do 15 minut slavíte</h3>
+          <p>Vyzvednete si ho u nás, nebo pošleme kurýrem po Brně.</p>
+        </li>
+      </ol>
+    </div>
+
+    <!-- 3 — široký banner s odtrhávací lištou (kurýři + CTA) -->
+    <div class="xp-banner">
+      <figure class="xp-photo anim-img">
+        <img src="images/banner-pockani.webp"
+             alt="Cukrářka zdobí růžový dort s čokoládovým přelivem v dílně cukrárny Pusinka"
+             loading="lazy" decoding="async" width="768" height="234">
+      </figure>
+
+      <span class="badge-circle xp-badge" aria-hidden="true">Ještě dnes!</span>
+
+      <div class="xp-bar">
+        <p class="xp-couriers" data-pop=".chip">
+          <span class="xp-couriers-label">Rozvoz po Brně</span>
+          <span class="chip chip--pink">Bolt</span>
+          <span class="chip chip--pink">Foodora</span>
+          <span class="chip chip--pink">Wolt</span>
+        </p>
+        <a class="btn btn--cherry xp-cta" href="/404">Dorty na počkání <span class="arr">→</span></a>
+      </div>
+    </div>
+
+  </div>
+</section></body></html>

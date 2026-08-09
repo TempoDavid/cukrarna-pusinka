@@ -893,115 +893,208 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
 /* ---------- Dorty na počkání ---------- */
 .express {
   position: relative;
-  padding-block: clamp(3.5rem, 7vw, 5.5rem);
+  padding-block: clamp(3rem, 6vw, 4.5rem);
 }
-.express-head {
-  max-width: 660px;
-  margin: 0 auto 3rem;
-  text-align: center;
-}
-.express-head h2 { margin-bottom: .35em; }
-.express-lead { font-weight: 500; margin: 0; }
 
-.steps-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 3rem;
-}
-.step {
+/* ---------- Panel: jedna hrana, jeden stín ---------- */
+.xp-panel {
   position: relative;
-  background: var(--pink-light);
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);
+  align-items: stretch;
+  background: var(--cream);
   border: var(--ol);
-  border-radius: 22px;
+  border-radius: 26px;
   box-shadow: var(--shadow);
-  padding: 2.4rem 1.5rem 1.5rem;
-  transition: transform .35s var(--spring), box-shadow .35s var(--spring);
 }
-.step:nth-child(2) { background: #DDF0E7; }
-.step:nth-child(3) { background: #FDEFC4; }
-.step:hover {
-  transform: translateY(-7px);
-  box-shadow: 9px 11px 0 var(--ink);
+.xp-deco-sprinkles {
+  width: 96px;
+  top: -30px;
+  left: -26px;
+  transform: rotate(-14deg);
+  z-index: 3;
+  aspect-ratio: 100 / 68;
 }
-.step-num {
-  position: absolute;
-  top: -20px;
-  left: 1.4rem;
+
+/* ---------- Levý sloupec ---------- */
+.xp-copy {
+  min-width: 0;
+  padding: clamp(1.7rem, 2.9vw, 2.5rem) clamp(1.4rem, 2.5vw, 2.1rem)
+           clamp(1.8rem, 2.9vw, 2.4rem) clamp(1.6rem, 3vw, 2.6rem);
+}
+.xp-kicker { font-size: .7rem; letter-spacing: .16em; }
+.xp-title {
+  font-size: clamp(1.85rem, 3.1vw, 2.6rem);
+  margin: .7rem 0 .35em;
+}
+.xp-lead {
+  margin: 0;
+  font-weight: 500;
+  font-size: clamp(.94rem, 1.15vw, 1rem);
+  line-height: 1.55;
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+
+/* ---------- Tři kroky ---------- */
+.xp-steps {
+  list-style: none;
+  margin: 1.4rem 0 0;
+  padding: 0;
+}
+.xp-step {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  column-gap: .9rem;
+  align-items: start;
+}
+.xp-step + .xp-step {
+  margin-top: .8rem;
+  padding-top: .8rem;
+  border-top: 2px dashed rgba(43, 21, 22, .2);
+}
+.xp-num {
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: var(--cherry);
-  color: var(--cream);
+  width: 44px;
+  height: 44px;
   border: var(--ol);
+  border-radius: 50%;
   box-shadow: 3px 3px 0 var(--ink);
   font-family: var(--agbalumo);
-  font-size: 1.1rem;
-  transform: rotate(-6deg);
+  font-size: 1.2rem;
+  line-height: 1;
 }
-.step-ico {
-  display: block;
-  width: 58px;
-  height: 62px;
-  margin: .2rem 0 .9rem auto;
-  line-height: 0;
-}
-.step-ico svg { width: 100%; height: 100%; }
-.step h3 { margin-bottom: .3em; }
-.step p { font-size: .88rem; line-height: 1.55; margin: 0; color: #5d4a45; }
-
-.express-strip {
-  display: grid;
-  grid-template-columns: 1.35fr .9fr;
-  gap: 1.8rem;
+.xp-num--1 { background: var(--cherry); color: var(--cream); transform: rotate(-7deg); }
+.xp-num--2 { background: var(--pistachio); transform: rotate(6deg); }
+.xp-num--3 { background: var(--butter); transform: rotate(-5deg); }
+.xp-step-body { min-width: 0; }
+.xp-step-head {
+  display: flex;
   align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .4rem .7rem;
+  margin-bottom: .15rem;
 }
-.express-photo {
+.xp-step-head h3 {
+  margin: 0;
+  font-size: clamp(1rem, 1.45vw, 1.16rem);
+}
+.xp-plate {
+  font-size: .82rem;
+  padding: .22rem .7rem;
+  transform: rotate(-2deg);
+}
+.xp-plate--hot { background: var(--cherry); color: var(--cream); transform: rotate(2deg); }
+.xp-step-body p {
+  margin: 0;
+  font-size: .87rem;
+  line-height: 1.5;
+  color: #5d4a45;
+  text-wrap: pretty;
+}
+.xp-action { margin: 1.5rem 0 0; }
+
+/* ---------- Pravý sloupec: fotka v pastelovém bloku ---------- */
+.xp-media {
   position: relative;
   margin: 0;
-  border: var(--ol);
-  border-radius: 22px;
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  transform: rotate(-1deg);
-}
-.express-photo img {
-  width: 100%;
-  aspect-ratio: 16 / 7;
-  object-fit: cover;
-  display: block;
-}
-.express-cta {
-  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 1rem;
+  background-color: var(--pink-light);
+  border-left: var(--ol);
+  border-radius: 0 23px 23px 0;
+  /* bez ořezu, ať samolepka může přesahovat; rohy si hlídá strip sám */
 }
-.express-badge {
-  transform: rotate(7deg);
-  --r: 7deg;
+.xp-photo {
+  flex: 1;
+  margin: clamp(1.1rem, 2vw, 1.6rem);
+  margin-bottom: 0;
+  border: var(--ol);
+  border-radius: 18px;
+  /* stín patří sem, NE na .anim-img (clip-path by ho ořízl) */
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.xp-photo-clip { height: 100%; }
+.xp-photo img {
+  width: 100%;
+  height: 100%;
+  min-height: 230px;
+  object-fit: cover;
+  object-position: 50% 55%;
+  display: block;
+}
+.xp-sticker {
+  position: absolute;
+  top: -22px;
+  right: -18px;
+  width: 104px;
+  height: 104px;
+  font-size: .7rem;
+  transform: rotate(9deg);
+  --r: 9deg;
   animation: bob 5.4s ease-in-out infinite;
+  z-index: 3;
 }
-.couriers {
+/* ink lišta přivařená ke spodní hraně — kurýři už neplavou */
+.xp-strip {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: .5rem;
+  gap: .45rem .8rem;
+  margin: clamp(1.1rem, 2vw, 1.6rem) 0 0;
+  padding: .75rem clamp(1.1rem, 2vw, 1.6rem);
+  background: var(--ink);
+  border-top: 3px dashed rgba(253, 242, 231, .35);
+  border-radius: 0 0 23px 0;
+}
+.xp-strip-label {
+  color: var(--butter);
   font-weight: 700;
-  font-size: .82rem;
+  font-size: .66rem;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+}
+.xp-couriers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.xp-couriers li {
+  background: transparent;
+  color: var(--cream);
+  border: 2px solid rgba(253, 242, 231, .5);
+  border-radius: 999px;
+  padding: .28rem .75rem;
+  font-weight: 700;
+  font-size: .72rem;
   text-transform: uppercase;
   letter-spacing: .07em;
-  margin: 0;
 }
 
 @media (max-width: 900px) {
-  .steps-row { grid-template-columns: 1fr; gap: 2.2rem; }
-  .express-strip { grid-template-columns: 1fr; }
-  .express-cta { align-items: center; text-align: center; }
-  .couriers { justify-content: center; }
+  .xp-panel { grid-template-columns: 1fr; }
+  .xp-media {
+    border-left: 0;
+    border-top: var(--ol);
+    border-radius: 0 0 23px 23px;
+  }
+  .xp-photo { margin: 1.2rem 1.2rem 0; }
+  .xp-photo img { min-height: 0; aspect-ratio: 16 / 10; }
+  .xp-sticker { width: 88px; height: 88px; font-size: .62rem; top: -30px; right: 6px; }
+  .xp-strip { border-radius: 0 0 23px 23px; }
+  .xp-deco-sprinkles { width: 68px; top: -22px; left: -10px; }
+  .xp-action .btn { width: 100%; justify-content: center; }
+}
+@media (max-width: 560px) {
+  .xp-step { grid-template-columns: 38px minmax(0, 1fr); column-gap: .7rem; }
+  .xp-num { width: 38px; height: 38px; font-size: 1.05rem; }
+  .xp-strip { justify-content: center; }
 }
 
 /* ---------- Svatby + Firmy (pbannery) ---------- */
