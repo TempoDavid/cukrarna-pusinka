@@ -105,6 +105,18 @@
       scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
     });
 
+    /* barevné sekce najíždějí zespodu jako vrstvy dortu */
+    ['#bestsellery', '#sluzby', '#recenze', '#kontakt'].forEach(function (sel) {
+      var sec = document.querySelector(sel);
+      if (!sec) return;
+      gsap.from(sec, {
+        yPercent: 6,
+        scale: .97,
+        ease: 'none',
+        scrollTrigger: { trigger: sec, start: 'top bottom', end: 'top 55%', scrub: .6 }
+      });
+    });
+
     /* zdobící linky se samy nakreslí (stroke draw-in) */
     document.querySelectorAll('.sq-path').forEach(function (path) {
       var len = path.getTotalLength();
@@ -141,14 +153,14 @@
       });
     });
 
-    /* polaroidy se při scrollu lehce rozestoupí */
-    gsap.to('.pol-1', {
-      y: -24,
+    /* fotky v příběhu se při scrollu lehce rozestoupí */
+    gsap.to('.lace-frame', {
+      y: -22,
       ease: 'none',
       scrollTrigger: { trigger: '.story', start: 'top bottom', end: 'bottom top', scrub: true }
     });
-    gsap.to('.pol-2', {
-      y: 24,
+    gsap.to('.inset-frame', {
+      y: 26,
       ease: 'none',
       scrollTrigger: { trigger: '.story', start: 'top bottom', end: 'bottom top', scrub: true }
     });

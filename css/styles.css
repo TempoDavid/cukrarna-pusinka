@@ -509,53 +509,52 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
   place-items: center;
   min-height: 380px;
 }
-.doily {
-  position: absolute;
-  width: min(475px, 92vw);
-  aspect-ratio: 1;
-  z-index: 0;
-  transform: rotate(-4deg);
-}
-.doily svg { width: 100%; height: 100%; display: block; filter: drop-shadow(8px 9px 0 rgba(43, 21, 22, .22)); }
-.hero-cake {
+/* velká zdobená fotka v komiksovém rámu */
+.hero-frame {
   position: relative;
   z-index: 1;
-  width: min(400px, 78vw);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 7px solid var(--ink);
-  box-shadow: inset 0 0 0 6px var(--cream), 10px 12px 0 rgba(43, 21, 22, .28);
-  overflow: hidden;
-  background: #fff;
-  display: grid;
-  place-items: center;
-  animation: sway 5.5s ease-in-out infinite alternate;
-  transition: transform .35s var(--spring);
+  margin: 0;
+  width: min(540px, 100%);
+  background: var(--cream);
+  border: var(--ol);
+  border-radius: 30px;
+  box-shadow: 12px 14px 0 var(--ink);
+  padding: .85rem .85rem 3.4rem;
+  transform: rotate(-1.8deg);
+  transition: transform .45s var(--spring), box-shadow .45s var(--spring);
 }
-.hero-cake:hover { transform: scale(1.04) rotate(2deg); }
-.hero-cake img {
-  width: 86%;
-  height: 86%;
-  object-fit: contain;
+.hero-frame:hover {
+  transform: rotate(0deg) translateY(-6px);
+  box-shadow: 16px 18px 0 var(--ink);
+}
+.hero-frame img {
+  width: 100%;
+  aspect-ratio: 5 / 4;
+  object-fit: cover;
+  border: var(--ol);
+  border-radius: 20px;
+}
+.hero-tag {
+  position: absolute;
+  left: 50%;
+  bottom: .95rem;
+  transform: translateX(-50%) rotate(-1deg);
+  white-space: nowrap;
+  font-family: var(--agbalumo);
+  font-size: 1.32rem;
+  color: var(--cherry);
+  letter-spacing: .01em;
+}
+.hero-tag::before,
+.hero-tag::after {
+  content: '✦';
+  color: var(--pink);
+  font-size: .8em;
+  margin: 0 .5rem;
+  vertical-align: .1em;
 }
 
 .sticker { position: absolute; z-index: 3; }
-.stick-butter {
-  top: 2%;
-  right: 4%;
-  --r: 9deg;
-  transform: rotate(9deg);
-  animation: bob 5.4s ease-in-out infinite;
-}
-.stick-cherry {
-  bottom: 6%;
-  left: 2%;
-  --r: -7deg;
-  transform: rotate(-7deg);
-  background: var(--cherry);
-  color: var(--cream);
-  animation: bob 6.2s ease-in-out infinite reverse;
-}
 .spark {
   position: absolute;
   font-family: var(--agbalumo);
@@ -569,9 +568,10 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
 
 @media (max-width: 900px) {
   .hero-grid { grid-template-columns: 1fr; }
-  .hero-stage { min-height: 0; margin-top: .5rem; }
+  .hero-stage { min-height: 0; margin-top: 1.5rem; }
   .spark { display: none; }
-  .stick-butter { width: 96px; height: 96px; font-size: .64rem; top: -4%; }
+  .hero-frame { padding-bottom: 3rem; transform: rotate(-1.2deg); }
+  .hero-tag { font-size: 1.1rem; }
 }
 
 /* ---------- Story / Tradice ---------- */
@@ -584,23 +584,103 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
 }
 .story-stage {
   position: relative;
-  min-height: 460px;
+  min-height: 430px;
+  display: flex;
+  align-items: flex-start;
 }
-.pol-wrap { margin: 0; }
-.pol-wrap .polaroid { margin: 0; }
-.pol-1 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: min(340px, 62%);
+.lace-frame {
+  position: relative;
+  margin: 0;
+  width: min(400px, 74%);
+  background: var(--cream);
+  border: var(--ol);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  padding: .8rem .8rem 2.9rem;
+  transform: rotate(-2deg);
+  transition: transform .4s var(--spring);
   z-index: 2;
 }
-.pol-2 {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: min(300px, 56%);
+.lace-frame:hover { transform: rotate(0deg) translateY(-5px); }
+.lace-frame img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: var(--ol);
+  border-radius: 14px;
 }
+.lace-edge {
+  position: absolute;
+  left: .8rem;
+  right: .8rem;
+  bottom: 2.55rem;
+  height: 13px;
+  line-height: 0;
+  pointer-events: none;
+}
+.lace-edge svg { width: 100%; height: 100%; display: block; }
+.lace-frame figcaption {
+  position: absolute;
+  left: 0; right: 0; bottom: .8rem;
+  text-align: center;
+  font-family: var(--agbalumo);
+  font-size: 1.02rem;
+  color: var(--cherry);
+}
+.inset-frame {
+  position: absolute;
+  right: 2%;
+  bottom: 3%;
+  margin: 0;
+  width: 44%;
+  max-width: 210px;
+  background: var(--cream);
+  border: var(--ol);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: .55rem;
+  transform: rotate(4deg);
+  transition: transform .4s var(--spring);
+  z-index: 3;
+}
+.inset-frame:hover { transform: rotate(1deg) scale(1.04); }
+.inset-frame img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+}
+/* pecet od roku 1992 */
+.seal {
+  position: absolute;
+  left: -3%;
+  top: -5%;
+  z-index: 4;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  background: var(--cherry);
+  color: var(--cream);
+  border: var(--ol);
+  box-shadow: var(--shadow-sm);
+  transform: rotate(-11deg);
+  text-align: center;
+}
+.seal b { font-family: var(--agbalumo); font-weight: 400; font-size: 1.62rem; line-height: 1; }
+.seal i {
+  font-style: normal;
+  font-weight: 700;
+  font-size: .58rem;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  margin-bottom: .1rem;
+}
+
 .accent-cherry { color: var(--cherry); }
 .chip-list {
   display: flex;
@@ -627,61 +707,75 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
 }
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
-  gap: 1.6rem;
-  row-gap: 4.2rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
 }
-.card-cake {
+.pcard {
   position: relative;
   display: flex;
   flex-direction: column;
   background: var(--cream);
   border: var(--ol);
-  border-radius: 18px;
+  border-radius: 20px;
   box-shadow: var(--shadow);
-  padding: 4.6rem 1.2rem 1.2rem;
-  text-align: center;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
   transform: rotate(var(--tilt, 0deg));
-  transition: transform .3s var(--spring), box-shadow .3s var(--spring);
+  transition: transform .35s var(--spring), box-shadow .35s var(--spring);
 }
-.card-cake:hover {
-  transform: rotate(var(--tilt, 0deg)) translateY(-8px);
-  box-shadow: 8px 10px 0 var(--ink);
+.pcard:hover {
+  transform: rotate(0deg) translateY(-8px);
+  box-shadow: 10px 12px 0 var(--ink);
+  z-index: 4;
 }
-.card-cake .ring {
-  position: absolute;
-  top: -66px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 132px;
-  height: 132px;
-  border-radius: 50%;
-  border: var(--ol);
+/* velké karty zabírají 2 sloupce */
+.pcard--big { grid-column: span 2; }
+
+.pcard-media {
+  position: relative;
+  border-bottom: var(--ol);
   background: #fff;
   overflow: hidden;
-  display: grid;
-  place-items: center;
-  box-shadow: var(--shadow-sm);
-  transition: transform .35s var(--spring);
 }
-.card-cake .ring img { width: 88%; height: 88%; object-fit: contain; transition: transform .35s var(--spring); }
-.card-cake:hover .ring { transform: translateX(-50%) rotate(6deg) scale(1.06); }
-.card-cake:hover .ring img { transform: rotate(8deg); }
-.card-cake h3 { margin-bottom: .35em; }
-.card-cake p { font-size: .86rem; line-height: 1.5; margin-bottom: 1rem; }
-.card-foot {
-  margin-top: auto;
+.pcard-media img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  transition: transform .5s var(--spring);
+}
+.pcard--big .pcard-media img { aspect-ratio: 16 / 11; }
+.pcard:hover .pcard-media img { transform: scale(1.06); }
+
+.pcard-body {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: .8rem;
+  flex-direction: column;
+  flex: 1;
+  padding: 1.1rem 1.15rem 1.15rem;
 }
-.btn-sm { padding: .6rem 1.05rem; font-size: .78rem; box-shadow: var(--shadow-sm); }
+.pcard-body h3 { margin-bottom: .3em; }
+.pcard-body p {
+  font-size: .87rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  color: #5d4a45;
+}
+.pcard-body .btn { align-self: flex-start; margin-top: auto; }
+
+.pcard-price {
+  position: absolute;
+  left: .8rem;
+  bottom: .8rem;
+  z-index: 2;
+  font-size: 1.28rem;
+  box-shadow: 4px 4px 0 rgba(43, 21, 22, .35);
+}
+
 .flag {
   position: absolute;
   z-index: 3;
-  top: -12px;
-  right: 10px;
+  top: .8rem;
+  right: .8rem;
   background: var(--butter);
   border: 2px solid var(--ink);
   border-radius: 999px;
@@ -690,27 +784,29 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
   font-size: .66rem;
   text-transform: uppercase;
   letter-spacing: .08em;
-  padding: .28rem .7rem;
+  padding: .3rem .72rem;
   transform: rotate(3deg);
 }
 .flag--second {
   right: auto;
-  left: 14px;
+  left: .8rem;
+  top: .8rem;
   background: var(--pistachio);
   transform: rotate(-3deg);
 }
+
 /* easter egg bublina (Pohádka) */
 .egg {
   position: absolute;
-  top: -46px;
+  top: -14px;
   left: 50%;
   width: max-content;
   max-width: 210px;
-  margin-left: -20px;
-  padding: .6rem .9rem 0.7rem;
+  margin-left: -30px;
+  padding: .6rem .9rem .7rem;
   font-size: .78rem;
   font-weight: 700;
-  z-index: 3;
+  z-index: 6;
   transform: rotate(-3deg) scale(0);
   transform-origin: bottom left;
   transition: transform .35s var(--spring);
@@ -718,28 +814,48 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
 }
 .has-egg:hover .egg,
 .has-egg:focus-within .egg { transform: rotate(-3deg) scale(1); }
-/* CTA karta */
-.card-more {
-  justify-content: center;
-  align-items: center;
-  gap: .4rem;
-  text-decoration: none;
-  background: var(--pink-light);
-  padding-top: 1.2rem;
-}
-.more-big {
-  font-family: var(--agbalumo);
-  font-size: 3.4rem;
-  line-height: 1;
-  color: var(--cherry);
-}
-.card-more .btn { margin-top: .4rem; }
 
+/* CTA karta */
+.pcard--more {
+  grid-column: span 2;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .2rem 1.5rem;
+  background: var(--pink-light);
+  padding: 1.6rem 1.8rem;
+}
+.more-ico { width: 74px; height: 88px; line-height: 0; flex-shrink: 0; }
+.more-ico svg { width: 100%; height: 100%; }
+.pcard--more h3 { width: 100%; margin: 0 0 .15em; padding-left: calc(74px + 1.5rem); }
+.pcard--more p {
+  flex: 1;
+  min-width: 190px;
+  font-size: .88rem;
+  margin: 0;
+  color: #5d4a45;
+}
+.pcard--more .btn { margin: 0; flex-shrink: 0; }
+
+@media (max-width: 1080px) {
+  .cards { grid-template-columns: repeat(2, 1fr); }
+  .pcard--big { grid-column: span 2; }
+}
+@media (max-width: 640px) {
+  .cards { grid-template-columns: 1fr; gap: 1.6rem; }
+  .pcard--big, .pcard--more { grid-column: span 1; }
+  .pcard--big .pcard-media img { aspect-ratio: 1; }
+  .pcard--more { flex-direction: column; align-items: flex-start; gap: .5rem; }
+  .pcard--more h3 { padding-left: 0; }
+  .pcard--more .btn { margin-top: .6rem; }
+}
 @media (max-width: 900px) {
   .story-grid { grid-template-columns: 1fr; }
-  .story-stage { min-height: 0; height: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
-  .pol-1, .pol-2 { position: static; width: 100%; }
-  .cards { row-gap: 4.6rem; }
+  .story-stage { min-height: 0; padding-bottom: 2.5rem; }
+  .lace-frame { width: min(400px, 84%); }
+  .inset-frame { width: 40%; bottom: -1rem; right: 0; }
+  .seal { width: 88px; height: 88px; top: -4%; }
+  .seal b { font-size: 1.35rem; }
 }
 
 /* ---------- Dorty na počkání ---------- */
@@ -814,6 +930,32 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
 .pbanner-copy h2 { font-size: clamp(1.7rem, 2.6vw, 2.2rem); }
 .pbanner-copy p { font-weight: 500; font-size: .95rem; }
 .pbanner-copy .btn { margin-top: .5rem; }
+.pb-list {
+  list-style: none;
+  margin: 0 0 1.1rem;
+  padding: 0;
+  display: grid;
+  gap: .35rem;
+}
+.pb-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-weight: 700;
+  font-size: .82rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.pb-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: .32em;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 2.5px solid var(--ink);
+}
 /* fotka jako nalepená momentka s páskou, vykukuje přes okraj karty */
 .pbanner-photo {
   position: absolute;
@@ -910,35 +1052,61 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
   position: relative;
   background: var(--pistachio);
   border-top: var(--ol);
-  padding-block: clamp(3.5rem, 7vw, 5.5rem);
+  padding-block: clamp(2.8rem, 5vw, 4rem);
 }
 .outline-cream {
   color: var(--cream);
   -webkit-text-stroke: 2px var(--ink);
   text-shadow: 4px 4px 0 var(--ink);
 }
-.reviews .sec-head { margin-bottom: 3rem; }
-.rating-row { display: flex; justify-content: center; margin-top: 1rem; }
-.rating-badge {
-  transform: rotate(-4deg);
-  font-family: var(--raleway);
-  animation: bob 6s ease-in-out infinite;
-  --r: -4deg;
+.reviews-grid {
+  display: grid;
+  grid-template-columns: minmax(230px, .8fr) 2.2fr;
+  gap: clamp(1.6rem, 3vw, 3rem);
+  align-items: center;
+}
+.reviews-aside h2 { margin-bottom: .3em; font-size: clamp(1.8rem, 3.2vw, 2.5rem); }
+.reviews-score {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .5rem;
+  margin-bottom: 1.1rem;
+}
+.reviews-score b {
+  font-family: var(--agbalumo);
+  font-weight: 400;
+  font-size: 2.6rem;
+  line-height: 1;
+}
+.reviews-score .stars-row { color: var(--cherry); letter-spacing: .08em; font-size: 1.05rem; }
+.score-note {
+  flex-basis: 100%;
+  font-weight: 700;
+  font-size: .74rem;
+  text-transform: uppercase;
+  letter-spacing: .12em;
 }
 .bubbles {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.8rem;
+  gap: 1.2rem;
   align-items: start;
 }
 .bubble .stars-row {
   color: var(--cherry);
   letter-spacing: .14em;
-  font-size: 1.05rem;
-  margin-bottom: .5rem;
+  font-size: .92rem;
+  margin-bottom: .4rem;
 }
-.bubble p { font-size: .92rem; line-height: 1.55; }
-.bubble footer { font-weight: 700; font-size: .85rem; text-transform: uppercase; letter-spacing: .06em; }
+.bubble { padding: 1.1rem 1.15rem 1.5rem; border-radius: 16px; }
+.bubble p { font-size: .85rem; line-height: 1.5; margin-bottom: .7rem; }
+.bubble footer { font-weight: 700; font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; }
+
+@media (max-width: 980px) {
+  .reviews-grid { grid-template-columns: 1fr; }
+  .bubbles { grid-template-columns: 1fr; gap: 1.4rem; }
+}
 
 /* ---------- Kontakt ---------- */
 .contact {
@@ -1055,9 +1223,8 @@ a.chip:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
 .best-cupcake { aspect-ratio: 100 / 120; }
 
 /* hero */
-.hero-sprinkles-1 { width: 92px; top: -2%; left: -4%; transform: rotate(-10deg); opacity: .9; }
-.hero-cherry { width: 64px; bottom: 16%; right: -4%; transform: rotate(10deg); }
-.hero-pusinka { width: 58px; top: 24%; left: -8%; transform: rotate(-7deg); }
+.hero-sprinkles-1 { width: 96px; top: -6%; left: -7%; transform: rotate(-10deg); z-index: 4; }
+.hero-cherry { width: 68px; top: 6%; right: -6%; transform: rotate(14deg); z-index: 4; }
 
 /* story */
 .story { position: relative; }
