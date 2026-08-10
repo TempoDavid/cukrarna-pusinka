@@ -5,3 +5,5 @@ Thumbs.db
 .DS_Store
 .playwright-mcp/
 /*.png
+audit-*.png
+Audit-webu-*.pdf
