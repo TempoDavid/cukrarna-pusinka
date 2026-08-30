@@ -13,9 +13,31 @@ from reportlab.lib.utils import ImageReader
 BASE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(BASE)
 
-pdfmetrics.registerFont(TTFont("UI", os.path.join(BASE, "fonts", "segoeui.ttf")))
-pdfmetrics.registerFont(TTFont("UIB", os.path.join(BASE, "fonts", "segoeuib.ttf")))
-pdfmetrics.registerFont(TTFont("UISB", os.path.join(BASE, "fonts", "seguisb.ttf")))
+# Fonty se berou ze systemu. Segoe UI je licencovany Microsoftem,
+# proto neni soucasti repozitare. Na jinem systemu doplnte vlastni cestu.
+FONT_DIRS = [
+    os.path.join(BASE, "fonts"),
+    r"C:\Windows\Fonts",
+    "/usr/share/fonts/truetype/dejavu",
+]
+FONT_FILES = {
+    "UI": ["segoeui.ttf", "DejaVuSans.ttf", "arial.ttf"],
+    "UIB": ["segoeuib.ttf", "DejaVuSans-Bold.ttf", "arialbd.ttf"],
+    "UISB": ["seguisb.ttf", "segoeuib.ttf", "DejaVuSans-Bold.ttf", "arialbd.ttf"],
+}
+
+
+def find_font(names):
+    for d in FONT_DIRS:
+        for n in names:
+            f = os.path.join(d, n)
+            if os.path.exists(f):
+                return f
+    raise SystemExit("Nenalezen zadny z fontu: " + ", ".join(names))
+
+
+for alias, names in FONT_FILES.items():
+    pdfmetrics.registerFont(TTFont(alias, find_font(names)))
 
 INK = HexColor("#2B1516")
 PINK = HexColor("#EF7E88")
