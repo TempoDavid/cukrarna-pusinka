@@ -10,6 +10,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase.pdfmetrics import stringWidth
 from reportlab.lib.utils import ImageReader
 
+DEMO_URL = "https://cukrarna-pusinka.vercel.app"
 BASE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(BASE)
 
@@ -224,7 +225,7 @@ d.c.setFont("UI", 13.6)
 d.c.setFillColor(HexColor("#5A2226"))
 d.c.drawString(M, H - 71 * mm, "Cukrářství a perníkářství Pusinka, Brno")
 d.c.setFont("UI", 9.6)
-d.c.drawString(M, H - 79 * mm, "Analýza současného webu, provedené úpravy a návrh dalšího postupu")
+d.c.drawString(M, H - 79 * mm, "Analýza současného webu, nová úvodní stránka a návrh dalšího postupu")
 d.c.setFont("UI", 8.6)
 d.c.drawString(M, H - 87 * mm, "Srpen 2026")
 
@@ -319,10 +320,21 @@ d.para(
 d.new_page("Co je hotové")
 d.h2("Nová úvodní stránka, kterou si můžete projít")
 d.para(
-    "Připravili jsme novou úvodní stránku jako ukázku. Obsah, ceny i kontakty jsou převzaté "
-    "z vašeho webu beze změny. Změnili jsme způsob, jakým se to podává.",
+    "Novou úvodní stránku jsme postavili a nasadili. Obsah, ceny i kontakty jsou převzaté "
+    "z vašeho webu beze změny. Změnili jsme způsob, jakým se to podává. Otevřete si ji "
+    "na počítači i na telefonu:",
     size=9.4, color=GREY)
-d.y -= 3
+d.y += 2
+d.c.setFillColor(CHERRY)
+d.c.setFont("UISB", 10.6)
+_u = "cukrarna-pusinka.vercel.app"
+d.c.drawString(M, d.y, _u)
+_uw = stringWidth(_u, "UISB", 10.6)
+d.c.linkURL(DEMO_URL, (M, d.y - 3, M + _uw, d.y + 10), relative=0)
+d.c.setStrokeColor(CHERRY)
+d.c.setLineWidth(0.8)
+d.c.line(M, d.y - 2.4, M + _uw, d.y - 2.4)
+d.y -= 22
 
 img_h = 47 * mm
 half = (CW - 6 * mm) / 2
@@ -421,7 +433,7 @@ phases = [
         "Zvětšit tlačítka a odkazy na mobilu nad 44 bodů.",
         "Opravit popisky obrázků a české názvy sekcí.",
     ]),
-    ("Krok 2", "Vyfotit vlastní produkty a provoz", "podle domluvy", BUTTER, [
+    ("Krok 2", "Vyfotit vlastní produkty a provoz", "1 den focení", BUTTER, [
         "Půldenní focení ve vaší dílně: dorty, zákusky, perníky a vitrína.",
         "Jednotné pozadí a světlo, aby katalog působil jako jeden celek.",
         "Několik fotografií vás a týmu při práci pro sekci o nás.",
@@ -512,7 +524,7 @@ for p in picks:
 d.y -= bh + 14
 d.h3("Další krok")
 d.para(
-    "Novou úvodní stránku si můžete projít na počítači i na telefonu. Pokud vám bude sedět "
+    "Projděte si novou úvodní stránku a řekněte nám, co na ni říkáte. Pokud vám bude sedět "
     "směr, domluvíme si schůzku, projdeme kroky podle vašich priorit a upřesníme rozsah "
     "a cenu. Pokud vám něco sedět nebude, řekněte co, a upravíme to.",
     size=9.4, color=GREY)
@@ -535,10 +547,16 @@ d.c.drawString(M + 26 * mm, d.y, "jsme.proste@tempovis.co")
 d.y -= 13
 d.c.setFillColor(INK)
 d.c.setFont("UISB", 9.4)
-d.c.drawString(M, d.y, "Ukázka")
+d.c.drawString(M, d.y, "Nová stránka")
 d.c.setFont("UI", 9.4)
-d.c.setFillColor(GREY)
-d.c.drawString(M + 26 * mm, d.y, "odkaz doplníme po nasazení")
+d.c.setFillColor(CHERRY)
+link_txt = "cukrarna-pusinka.vercel.app"
+d.c.drawString(M + 26 * mm, d.y, link_txt)
+lw = stringWidth(link_txt, "UI", 9.4)
+d.c.linkURL(DEMO_URL, (M + 26 * mm, d.y - 2, M + 26 * mm + lw, d.y + 9), relative=0)
+d.c.setStrokeColor(CHERRY)
+d.c.setLineWidth(0.6)
+d.c.line(M + 26 * mm, d.y - 1.8, M + 26 * mm + lw, d.y - 1.8)
 
 d.save()
 print("PDF hotovo:", out)
